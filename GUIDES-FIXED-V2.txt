@@ -1,0 +1,4 @@
+GUIDE FIX V2
+- 'OPEN FULL GUIDE' no longer depends on navigating to another HTML file.
+- Full guide content expands directly inside the modal.
+- Separate SEO guide pages remain included in the ZIP for search engines and direct URLs.

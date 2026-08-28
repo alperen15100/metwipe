@@ -1,0 +1,4 @@
+FREE PRIVACY GUIDES FIX
+- Guide buttons now always open a working in-page modal.
+- Full standalone SEO guide pages are still included.
+- 'OPEN FULL GUIDE PAGE' opens the separate guide page when deployed/extracted normally.

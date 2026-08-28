@@ -1,0 +1,33 @@
+METWIPE — FINAL SEO / ADSENSE LAUNCH CHECKLIST
+
+READY IN THIS ZIP
+- Professional Ecrin Labs branding
+- Contact: ecrincrypto@gmail.com
+- No fake/sample privacy scan panel on homepage
+- Working JPG/JPEG local scanner and lossless cleaner inherited from the fixed engine
+- Local uploader micro-animation
+- SEO title / description / canonical placeholder
+- Open Graph / Twitter metadata
+- Organization / WebSite / WebApplication structured data
+- Original guide pages with internal links
+- robots.txt
+- sitemap template
+- ads.txt template
+- favicon / manifest
+- Netlify/security header files
+- Ad placeholders that do not imitate download buttons
+- Privacy / Terms templates
+
+AFTER YOU BUY/CHOOSE THE DOMAIN
+1. Replace every metwipe.com with the real domain.
+2. Rename sitemap.xml.template to sitemap.xml.
+3. Verify the site in Google Search Console and submit sitemap.xml.
+4. Request indexing for the homepage and main guide/tool pages.
+5. Apply for AdSense only after the public site is complete and navigable.
+6. After AdSense approval, put the exact publisher ID in ads.txt and add the official ad code.
+7. Update Privacy Policy for the real domain, AdSense, analytics/cookies and consent setup.
+8. Use a consent management platform where required.
+9. Test the deployed URL on mobile and Lighthouse/Core Web Vitals.
+
+IMPORTANT
+No legitimate SEO package can guarantee instant #1 rankings. Google and AdSense emphasize useful original content, clear navigation, policy compliance and real user value.

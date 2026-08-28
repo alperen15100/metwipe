@@ -1,0 +1,744 @@
+<!doctype html>
+<!-- METWIPE PRODUCTION • metwipe.com • Ecrin Labs -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07080c">
+<title>MetWipe by Ecrin Labs — Free Photo Metadata Cleaner — JPEG, PNG & WebP</title>
+<meta name="description" content="Free local photo metadata cleaner by Ecrin Labs. Inspect and clean supported JPEG, PNG and WebP metadata, batch-clean photos and verify cleaned copies in your browser.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="author" content="Ecrin Labs">
+<meta name="application-name" content="MetWipe">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MetWipe by Ecrin Labs — Photo Privacy Scanner">
+<meta property="og:description" content="Check what a JPEG reveals before you share it. Local EXIF inspection and verified metadata cleaning.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://metwipe.com/">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+:root{--bg:#07080c;--panel:#0e1117;--panel2:#11151d;--line:#232a35;--text:#f6f7fb;--muted:#8e98a8;--vio:#8b6cff;--vio2:#6a49df;--green:#5be2a2;--red:#ff746d;--amber:#ffc46d}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(760px 420px at 76% 0%,#6944ff19,transparent 68%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(#ffffff03 1px,transparent 1px),linear-gradient(90deg,#ffffff03 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(#000,transparent 72%)}
+a{color:inherit;text-decoration:none}.wrap{width:min(1180px,calc(100% - 36px));margin:auto}
+nav{height:74px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff0a}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.4px}.logo{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#8b6cff;color:#fff;box-shadow:0 10px 28px #6848df35}.by{display:block;color:#8c79df;font-size:8px;letter-spacing:.15em;margin-top:1px}
+.navlinks{display:flex;gap:26px;color:#9ba4b3;font-size:11px}.navlinks a:hover{color:#fff}.local{font-size:9px;font-weight:900;padding:8px 10px;border-radius:99px;color:#63e4a5;background:#0b1913;border:1px solid #214736}
+.hero{padding:76px 0 66px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}.kicker{color:#9a83ff;font-size:10px;font-weight:900;letter-spacing:.14em}.hero h1{font-size:clamp(48px,6.2vw,76px);line-height:.98;letter-spacing:-4px;margin:16px 0 20px}.hero h1 span{color:#977dff}.lead{font-size:16px;color:#9ba5b4;line-height:1.72;max-width:590px}
+.trust{display:flex;gap:20px;flex-wrap:wrap;margin-top:22px;color:#bac1cc;font-size:10px}.trust b{color:#fff}.trust span:before{content:"✓";color:var(--green);margin-right:6px}
+.uploadCard{border:1px solid #252c37;background:linear-gradient(180deg,#10141c,#0b0e13);border-radius:21px;padding:19px;box-shadow:0 36px 95px #0007}
+.drop{min-height:290px;border:1px dashed #4f5666;border-radius:16px;display:grid;place-items:center;text-align:center;padding:28px;position:relative;overflow:hidden;transition:.28s cubic-bezier(.2,.8,.2,1)}
+.drop:after{content:"";position:absolute;width:280px;height:280px;border-radius:50%;background:#7a58ff14;filter:blur(40px);bottom:-170px;right:-80px;pointer-events:none}.drop.drag{border-color:#987cff;transform:translateY(-4px);box-shadow:0 16px 50px #704fff1f}
+.uploadIcon{width:62px;height:62px;border-radius:17px;display:grid;place-items:center;margin:auto auto 14px;background:#151925;border:1px solid #323948;color:#9b81ff;font-size:24px;transition:.28s}.drop.drag .uploadIcon{transform:translateY(-6px) scale(1.05)}
+.drop h3{font-size:16px;margin:0}.drop p{font-size:11px;color:#9983ff;margin:7px 0}.drop small{font-size:8px;color:#788291}.btn{border:0;border-radius:10px;padding:13px 17px;background:linear-gradient(135deg,#8e70ff,#6947df);color:#fff;font-size:10px;font-weight:900;cursor:pointer;box-shadow:0 12px 30px #6949de30}.btn:disabled{opacity:.55;cursor:wait}
+.pick{margin-top:17px}.selected{display:none;align-items:center;gap:10px;text-align:left;margin-top:15px;padding:10px;border-radius:11px;background:#0b0e13;border:1px solid #2a313d}.selected.show{display:flex;animation:fileIn .35s cubic-bezier(.2,.8,.2,1)}.thumb{width:43px;height:43px;border-radius:8px;background:#181c24 center/cover no-repeat;border:1px solid #303746}.selmeta{flex:1;min-width:0}.selmeta b{display:block;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.selmeta small{font-size:8px;color:#748090}.scanline{display:none;height:4px;background:#202633;border-radius:99px;overflow:hidden;margin-top:7px}.scanline.show{display:block}.scanline i{display:block;width:26%;height:100%;background:#8b6cff;border-radius:99px;animation:scanMove 1s ease-in-out infinite}
+.proof{display:grid;grid-template-columns:repeat(3,1fr);margin-top:14px;border:1px solid #202631;background:#0a0d12;border-radius:14px}.proof div{padding:15px;text-align:center;border-right:1px solid #202631}.proof div:last-child{border:0}.proof b{font-size:10px}.proof small{display:block;color:#737e8d;font-size:8px;margin-top:4px}
+.adslot{min-height:105px;margin:35px 0;border:1px dashed #252b34;border-radius:14px;display:grid;place-items:center;color:#4e5764;font-size:8px;letter-spacing:.13em}.adslot:after{content:"ADVERTISEMENT"}
+.scan{display:none;max-width:850px;margin:35px auto 90px;padding:0 18px}.panel{background:#0e1117;border:1px solid #252c37;border-radius:21px;padding:25px;box-shadow:0 32px 90px #0008}.top{display:flex;justify-content:space-between;gap:12px}.fn{font-size:9px;color:#788392;margin-top:5px;word-break:break-all}.scorebox{margin:20px 0;padding:17px;border-radius:14px;background:#090b10;border:1px solid #222935;display:flex;justify-content:space-between;align-items:center}.score{font-size:34px;font-weight:950}.score.bad{color:var(--red)}.score.good{color:var(--green)}.row{display:grid;grid-template-columns:175px 1fr;padding:13px 0;border-bottom:1px solid #202630;gap:14px;font-size:11px;opacity:0;transform:translateY(7px);animation:rowIn .38s forwards}.row:nth-child(2){animation-delay:.05s}.row:nth-child(3){animation-delay:.1s}.row:nth-child(4){animation-delay:.15s}.key{color:#8792a1}.val{word-break:break-word}.risk.val{color:#ff8a84}.clean{width:100%;margin-top:20px}.verify{padding:15px;border-radius:12px;background:#0a1c15;border:1px solid #214c39;color:#63dfa2;margin-top:18px;font-size:10px;line-height:1.8;animation:success .45s}
+.section{padding:78px 0}.sectionHead{max-width:700px}.section h2{font-size:39px;letter-spacing:-1.8px;margin:8px 0 12px}.sub{color:#8c96a5;line-height:1.7;font-size:13px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}.card{padding:21px;background:#0c0f14;border:1px solid #202630;border-radius:15px}.card h3{font-size:13px}.card p{color:#818b9a;font-size:10px;line-height:1.65}.toolLinks{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.toolLinks a{font-size:10px;padding:9px 11px;border:1px solid #252c37;border-radius:9px;color:#b8c0cc;background:#0b0e13}
+.faq{max-width:860px}.faq details{border-bottom:1px solid #202630;padding:18px 0}.faq summary{cursor:pointer;font-size:12px;font-weight:800}.faq p{color:#84909f;font-size:11px;line-height:1.65}
+footer{border-top:1px solid #1e242d;padding:33px 0 45px;color:#697382;font-size:9px}.foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.footlinks{display:flex;gap:16px;flex-wrap:wrap}
+.modal{display:none;position:fixed;inset:0;background:#000d;z-index:30;padding:20px;overflow:auto}.modalBox{max-width:720px;margin:50px auto;background:#10141b;border:1px solid #2a313d;border-radius:18px;padding:28px}.modalBox p{color:#929cab;line-height:1.65;font-size:11px}.close{float:right;border:0;border-radius:8px;background:#1b212a;color:#fff;padding:8px 10px;cursor:pointer}
+@keyframes fileIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}@keyframes scanMove{0%{transform:translateX(-120%)}100%{transform:translateX(430%)}}@keyframes rowIn{to{opacity:1;transform:none}}@keyframes success{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+@media(max-width:820px){.navlinks{display:none}.hero{grid-template-columns:1fr;gap:40px;padding:46px 0}.hero h1{letter-spacing:-2.7px}.proof,.cards{grid-template-columns:1fr}.proof div{border-right:0;border-bottom:1px solid #202631}.row{grid-template-columns:115px 1fr}.section{padding:56px 0}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* --- Visible scan / clean motion layer --- */
+.scanStage{display:none;margin:18px 0;padding:26px 18px;border:1px solid #252c37;border-radius:16px;background:#090c12;text-align:center;overflow:hidden}
+.scanStage.show{display:block;animation:stageIn .28s ease-out}
+.scanOrb{width:84px;height:84px;margin:4px auto 16px;border-radius:50%;position:relative;display:grid;place-items:center;background:#111621;border:1px solid #30394a}
+.scanOrb:before,.scanOrb:after{content:"";position:absolute;border-radius:50%;border:2px solid transparent}
+.scanOrb:before{inset:8px;border-top-color:#9c81ff;border-right-color:#9c81ff;animation:spin .9s linear infinite}
+.scanOrb:after{inset:19px;border-bottom-color:#5be2a2;animation:spin 1.35s linear infinite reverse}
+.scanOrb span{font-size:24px;color:#9c81ff}
+.scanStage h3{margin:0;font-size:14px}.scanStage p{margin:6px 0 0;color:#7f8999;font-size:9px}
+.scanProgress{height:5px;margin:18px auto 0;max-width:420px;background:#202633;border-radius:99px;overflow:hidden}
+.scanProgress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#6f4be0,#9e82ff,#5be2a2);border-radius:99px;transition:width .3s ease}
+.scanStep{margin-top:10px;color:#a6afbc;font-size:9px;min-height:14px}
+.resultsWrap{opacity:0;transform:translateY(8px);transition:.38s ease}
+.resultsWrap.show{opacity:1;transform:none}
+.scorePop{animation:scorePop .42s cubic-bezier(.2,.8,.2,1)}
+.cleanOverlay{display:none;margin-top:18px;padding:22px;border-radius:14px;background:#0a0d13;border:1px solid #272e3a;text-align:center}
+.cleanOverlay.show{display:block;animation:stageIn .25s}
+.cleanChecks{display:grid;gap:8px;max-width:420px;margin:16px auto 0;text-align:left}
+.cleanCheck{padding:10px 12px;border:1px solid #252c37;border-radius:10px;color:#85909f;font-size:9px;opacity:.35;transform:translateY(5px);transition:.35s}
+.cleanCheck.done{opacity:1;transform:none;color:#5be2a2;border-color:#24543e;background:#0a1812}
+.final100{font-size:44px;font-weight:950;color:#5be2a2;letter-spacing:-2px;margin-top:13px;display:none}
+.final100.show{display:block;animation:scorePop .55s cubic-bezier(.2,.8,.2,1)}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes stageIn{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1;transform:none}}@keyframes scorePop{0%{transform:scale(.75);opacity:.2}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@media(prefers-reduced-motion:reduce){.scanOrb:before,.scanOrb:after{animation:none!important}}
+
+.formatBadge{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid #2a3140;border-radius:99px;background:#0a0d12;color:#b9c1cd;font-size:8px;font-weight:900}
+.formatBadge i{width:7px;height:7px;border-radius:50%;background:#8b6cff;box-shadow:0 0 16px #8b6cff}
+.universalFlow{display:none;margin-top:18px;border:1px solid #252c37;border-radius:14px;background:#090c12;padding:16px}
+.universalFlow.show{display:block;animation:stageIn .3s}
+.ufTop{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.ufSteps{display:grid;gap:8px;margin-top:15px}
+.ufStep{display:grid;grid-template-columns:24px 1fr auto;gap:10px;align-items:center;padding:10px;border:1px solid #232a35;border-radius:10px;color:#778291;font-size:9px;transition:.35s;opacity:.5}
+.ufStep .dot{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#151a23;color:#8b6cff}
+.ufStep.live{opacity:1;color:#fff;border-color:#6954b8;background:#11101c;transform:translateX(3px)}
+.ufStep.done{opacity:1;color:#59e2a2;border-color:#234d3a;background:#0a1712}
+.ufStep.done .dot{background:#103425;color:#59e2a2}
+.ufBar{height:5px;background:#202632;border-radius:99px;overflow:hidden;margin-top:14px}
+.ufBar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#6f4ce1,#9a80ff,#58e3a2);transition:width .38s}
+@media(max-width:820px){.ufStep{grid-template-columns:24px 1fr}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":"https://metwipe.com/#org","name":"Ecrin Labs","email":"ecrincrypto@gmail.com"},
+{"@type":"WebSite","@id":"https://metwipe.com/#site","url":"https://metwipe.com/","name":"MetWipe","publisher":{"@id":"https://metwipe.com/#org"}},
+{"@type":"WebApplication","name":"MetWipe","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Local JPEG EXIF viewer, GPS checker and metadata remover."}
+]}
+</script>
+</head>
+<body>
+<div class="wrap">
+<nav>
+<a class="brand" href="#"><span class="logo">◆</span><span>MetWipe<span class="by">BY ECRIN LABS</span></span></a>
+<div class="navlinks"><a href="#scanner">Scanner</a><a href="#how">How it works</a><a href="#learn">Learn</a><a href="#faq">FAQ</a></div>
+<span class="local">● LOCAL PROCESSING</span>
+</nav>
+
+<section class="hero" id="scanner">
+<div>
+<div class="kicker">PHOTO PRIVACY SCANNER</div>
+<h1>Check it before<br><span>you share it.</span></h1>
+<p class="lead">Inspect hidden JPEG metadata such as GPS coordinates, device information and timestamps. Remove supported metadata locally and verify the cleaned copy before download.</p>
+<div class="trust"><span><b>No account</b></span><span><b>No file upload</b></span><span><b>Free</b></span><span><b>Original preserved</b></span></div>
+</div>
+<div class="uploadCard">
+<div class="drop" id="drop">
+<div>
+<div class="uploadIcon">⇧</div>
+<h3>Drop photos here</h3>
+<p>or choose one or multiple photos</p>
+<small>JPG / PNG / WebP / MP3 / WAV / DOCX / XLSX / PPTX • local processing</small><br>
+<button class="btn pick" id="pick">SCAN PHOTOS</button>
+<input id="file" type="file" accept="image/jpeg,image/png,image/webp,audio/mpeg,audio/wav,.mp3,.wav,.docx,.xlsx,.pptx" multiple hidden>
+<div class="selected" id="selected"><div class="thumb" id="thumb"></div><div class="selmeta"><b id="selname"></b><small id="selsize"></small><div class="scanline" id="scanline"><i></i></div></div></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="proof"><div><b>LOCAL PROCESSING</b><small>Supported JPEG stays on device</small></div><div><b>LOSSLESS STRIPPING</b><small>No additional JPEG re-encode</small></div><div><b>POST-CLEAN VERIFY</b><small>Cleaned copy is scanned again</small></div></div>
+<div class="adslot"></div>
+
+<section class="section" id="image-tools">
+  <div class="sectionHead"><div class="kicker">METWIPE IMAGE SUITE</div>
+  <h2>One privacy workflow. More image formats.</h2>
+  <p class="sub">JPEG, PNG and WebP can carry metadata in different structures. MetWipe now provides local inspection/cleaning workflows for supported metadata and batch processing without an application upload server.</p></div>
+  <div class="cards">
+    <div class="card"><h3>JPEG Privacy Cleaner</h3><p>Detailed EXIF inspection, GPS/device/date risk scoring, lossless metadata segment stripping and post-clean verification.</p></div>
+    <div class="card"><h3>PNG Metadata Cleaner</h3><p>Removes common textual and EXIF-style metadata chunks while preserving core image chunks and pixel data.</p></div>
+    <div class="card"><h3>WebP Metadata Cleaner</h3><p>Removes EXIF and XMP RIFF chunks while preserving the encoded WebP image payload.</p></div>
+    <div class="card"><h3>Batch Privacy Clean</h3><p>Select multiple supported photos, clean them locally and download a single ZIP containing the cleaned copies.</p></div>
+    <div class="card"><h3>Privacy Receipt</h3><p>Generate a local text report showing file name, detected metadata type, cleaning result and verification status.</p></div>
+    <div class="card"><h3>Share-safe workflow</h3><p>Original files remain unchanged. Cleaned copies are verified before they are offered for download.</p></div>
+  </div>
+</section>
+
+</div>
+
+<section class="scan" id="scan">
+<div class="panel">
+<div class="top"><div><h2 id="title" style="margin:0;font-size:23px">Preparing scan…</h2><div class="fn" id="fn"></div></div><span class="local">● ON-DEVICE</span></div>
+
+
+<div class="universalFlow" id="universalFlow">
+  <div class="ufTop"><div><b id="ufTitle" style="font-size:12px">Preparing file…</b><div id="ufSub" style="font-size:8px;color:#778291;margin-top:4px"></div></div><span class="formatBadge"><i></i><span id="ufFormat">FILE</span></span></div>
+  <div class="ufBar"><i id="ufBar"></i></div>
+  <div class="ufSteps">
+    <div class="ufStep" id="uf1"><span class="dot">1</span><span>Inspect container / metadata structure</span><b>WAIT</b></div>
+    <div class="ufStep" id="uf2"><span class="dot">2</span><span>Detect privacy-relevant metadata</span><b>WAIT</b></div>
+    <div class="ufStep" id="uf3"><span class="dot">3</span><span>Remove supported metadata safely</span><b>WAIT</b></div>
+    <div class="ufStep" id="uf4"><span class="dot">4</span><span>Re-open and verify cleaned output</span><b>WAIT</b></div>
+  </div>
+</div>
+
+<div class="scanStage" id="scanStage">
+  <div class="scanOrb"><span>◇</span></div>
+  <h3 id="scanStageTitle">Scanning metadata</h3>
+  <p>Your JPEG is being inspected locally on this device.</p>
+  <div class="scanProgress"><i id="scanProgress"></i></div>
+  <div class="scanStep" id="scanStep">Reading JPEG structure…</div>
+</div>
+
+<div class="resultsWrap" id="resultsWrap"><div id="output"></div></div>
+
+<div class="cleanOverlay" id="cleanOverlay">
+  <div class="scanOrb"><span>✓</span></div>
+  <h3 id="cleanOverlayTitle">Removing privacy metadata…</h3>
+  <div class="cleanChecks">
+    <div class="cleanCheck" id="cc1">EXIF / device fields</div>
+    <div class="cleanCheck" id="cc2">GPS / location fields</div>
+    <div class="cleanCheck" id="cc3">XMP / IPTC / comments</div>
+    <div class="cleanCheck" id="cc4">Re-scan cleaned JPEG</div>
+  </div>
+  <div class="final100" id="final100">100/100</div>
+</div>
+
+<button class="btn clean" id="clean" style="display:none">REMOVE METADATA — LOSSLESS JPEG</button>
+
+<div id="batchBox" style="display:none;margin-top:18px;padding:16px;border:1px solid #252c37;border-radius:14px;background:#0a0d12">
+  <div style="display:flex;justify-content:space-between;gap:12px;align-items:center">
+    <div><b style="font-size:12px">Batch Privacy Clean</b><div id="batchSub" style="color:#7d8796;font-size:9px;margin-top:4px"></div></div>
+    <span class="local">● LOCAL BATCH</span>
+  </div>
+  <div id="batchList" style="margin-top:12px"></div>
+  <button class="btn clean" id="batchClean">CLEAN ALL & DOWNLOAD ZIP</button>
+</div>
+
+<button class="btn clean" id="again" style="display:none;background:#1c222b">SCAN ANOTHER PHOTO</button>
+</div>
+</section>
+
+<div class="wrap">
+<section class="section" id="how">
+<div class="sectionHead"><div class="kicker">HOW IT WORKS</div><h2>Inspect. Clean. Verify.</h2><p class="sub">MetWipe is designed around the actual task rather than a fake demonstration panel. Your scan results only appear after you select your own JPEG.</p></div>
+<div class="cards">
+<div class="card"><h3>1. Inspect metadata</h3><p>Read common EXIF fields such as phone or camera model, timestamps, GPS, software and camera settings.</p></div>
+<div class="card"><h3>2. Remove supported metadata</h3><p>Strip supported JPEG metadata segments without adding another lossy JPEG compression pass.</p></div>
+<div class="card"><h3>3. Verify the output</h3><p>The generated cleaned file is scanned again before the tool reports it as verified.</p></div>
+</div>
+</section>
+
+
+<section class="section" id="extended-tools">
+  <div class="sectionHead">
+    <div class="kicker">EXTENDED PRIVACY SUITE</div>
+    <h2>Images, audio and Office files.</h2>
+    <p class="sub">MetWipe keeps the same animated Scan → Detect → Clean → Verify workflow across every format that is genuinely implemented in this build.</p>
+  </div>
+  <div class="cards">
+    <div class="card"><h3>MP3 Metadata Cleaner</h3><p>Detects and removes ID3v2 metadata at the beginning of MP3 files and ID3v1 tags at the end, then verifies the cleaned output.</p></div>
+    <div class="card"><h3>WAV Metadata Cleaner</h3><p>Removes common RIFF metadata chunks such as LIST/INFO, bext, iXML and ID3 while preserving the audio data chunks.</p></div>
+    <div class="card"><h3>DOCX Privacy Cleaner</h3><p>Removes core document properties such as author, last modified by, title, subject and description from OOXML packages.</p></div>
+    <div class="card"><h3>XLSX Privacy Cleaner</h3><p>Cleans workbook core metadata inside the OOXML ZIP container while keeping workbook content intact.</p></div>
+    <div class="card"><h3>PPTX Privacy Cleaner</h3><p>Cleans presentation core metadata using the same local OOXML package workflow.</p></div>
+    <div class="card"><h3>Animated Verification</h3><p>Every supported cleaner shows visible progress, staged checks and a final verified state instead of instant fake success.</p></div>
+  </div>
+</section>
+
+<section class="section" id="learn">
+<div class="sectionHead"><div class="kicker">FREE PRIVACY GUIDES</div><h2>Understand what photos can reveal.</h2><p class="sub">Original supporting content gives users useful context and gives search engines pages with distinct intent instead of duplicated keyword shells.</p></div>
+<div class="toolLinks">
+<a href="exif-viewer.html" data-guide="exif">EXIF Viewer Guide →</a>
+<a href="remove-exif.html" data-guide="remove">Remove EXIF Guide →</a>
+<a href="gps-metadata.html" data-guide="gps">GPS Metadata Guide →</a>
+<a href="photo-metadata.html" data-guide="photo">Photo Metadata Guide →</a>
+</div>
+</section>
+
+<section class="section faq" id="faq">
+<div class="kicker">FAQ</div><h2>Common questions.</h2>
+<details><summary>What is EXIF metadata?</summary><p>EXIF metadata can contain camera or phone information, timestamps, camera settings and sometimes GPS coordinates inside JPEG files.</p></details>
+<details><summary>Does MetWipe upload my photo?</summary><p>No. The current supported JPEG scanner and cleaner works locally in your browser.</p></details>
+<details><summary>Does metadata removal reduce JPEG quality?</summary><p>The cleaner removes supported metadata segments while keeping the encoded JPEG image data, avoiding an additional image re-encode.</p></details>
+<details><summary>Is a 100/100 Privacy Score a security guarantee?</summary><p>No. The score is a heuristic for supported metadata fields. Visible content can still reveal faces, addresses, documents, landmarks and other information.</p></details>
+</section>
+
+<div class="adslot"></div>
+<footer><div class="foot"><span>© 2026 MetWipe — a privacy utility by Ecrin Labs.</span><div class="footlinks"><a href="#" data-modal="privacyModal">Privacy Policy</a><a href="#" data-modal="termsModal">Terms</a><a href="mailto:ecrincrypto@gmail.com">ecrincrypto@gmail.com</a></div></div></footer>
+</div>
+
+
+<div class="modal" id="guideModal">
+  <div class="modalBox">
+    <button class="close" id="guideClose">Close</button>
+    <div class="kicker">METWIPE GUIDE</div>
+    <h2 id="guideTitle"></h2>
+    <div id="guideBody"></div>
+    <button class="btn" id="guideOpenPage" type="button" style="display:inline-block;margin-top:16px">OPEN FULL GUIDE</button><div id="guideFull" style="display:none;margin-top:18px"></div>
+  </div>
+</div>
+
+<div class="modal" id="privacyModal"><div class="modalBox"><button class="close">Close</button><h2>Privacy Policy</h2><p>MetWipe is designed to process supported JPEG files locally in your browser. Selected photo contents are not uploaded to an application server in this build. Before public launch, this text must be updated to match the final domain and the analytics, advertising, cookie and consent services actually used.</p></div></div>
+<div class="modal" id="termsModal"><div class="modalBox"><button class="close">Close</button><h2>Terms</h2><p>Keep original files and verify cleaned copies before sensitive sharing. Removing supported metadata does not prevent visible image content from revealing information.</p></div></div>
+
+<script>
+const $=s=>document.querySelector(s), file=$('#file'), pick=$('#pick'), hero=$('#scanner'), scan=$('#scan'), output=$('#output'), title=$('#title'), fn=$('#fn'), clean=$('#clean'), again=$('#again'), drop=$('#drop');
+let current=null, currentData=null;
+pick.onclick=()=>file.click(); again.onclick=()=>location.reload();
+file.onchange=()=>file.files[0]&&start(file.files[0]);
+['dragenter','dragover'].forEach(x=>drop.addEventListener(x,e=>{e.preventDefault();drop.classList.add('drag')}));
+['dragleave','drop'].forEach(x=>drop.addEventListener(x,e=>{e.preventDefault();drop.classList.remove('drag')}));
+drop.addEventListener('drop',e=>{let f=e.dataTransfer.files&&e.dataTransfer.files[0];if(f)start(f)});
+function text(v,o,n){let s='';for(let i=0;i<n&&o+i<v.byteLength;i++){let c=v.getUint8(o+i);if(!c)break;s+=String.fromCharCode(c)}return s}
+function rat(v,o,le,s=false){let a=s?v.getInt32(o,le):v.getUint32(o,le),b=s?v.getInt32(o+4,le):v.getUint32(o+4,le);return b?a/b:0}
+function parse(buf){
+ const v=new DataView(buf);if(v.byteLength<4||v.getUint16(0)!==0xFFD8)throw Error('This is not a valid JPEG file.');
+ let p=2,tiff=null,blocks=[];
+ while(p+4<=v.byteLength){if(v.getUint8(p)!==255){p++;continue}let m=v.getUint8(p+1);if(m===0xDA||m===0xD9)break;if(m>=0xD0&&m<=0xD7){p+=2;continue}let len=v.getUint16(p+2);if(len<2||p+2+len>v.byteLength)break;let d=p+4;if(m===0xE1&&text(v,d,6).startsWith('Exif')){tiff=d+6;blocks.push('EXIF')}else if(m===0xE1)blocks.push('APP1/XMP');else if(m===0xED)blocks.push('IPTC/Photoshop');else if(m===0xFE)blocks.push('Comment');p+=2+len}
+ let r={blocks:[...new Set(blocks)]};if(tiff===null)return r;
+ const le=text(v,tiff,2)==='II',u16=o=>v.getUint16(o,le),u32=o=>v.getUint32(o,le),sizes={1:1,2:1,3:2,4:4,5:8,7:1,9:4,10:8};
+ if(u16(tiff+2)!==42)return r;
+ function val(e,type,count){let bytes=(sizes[type]||1)*count,o=bytes<=4?e+8:tiff+u32(e+8);if(o<0||o+bytes>v.byteLength)return null;if(type===2)return text(v,o,count).replace(/\0+$/,'');if(type===3)return count===1?u16(o):Array.from({length:count},(_,i)=>u16(o+i*2));if(type===4)return count===1?u32(o):Array.from({length:count},(_,i)=>u32(o+i*4));if(type===5)return count===1?rat(v,o,le):Array.from({length:count},(_,i)=>rat(v,o+i*8,le));if(type===9)return count===1?v.getInt32(o,le):null;if(type===10)return count===1?rat(v,o,le,true):null;return null}
+ function ifd(off,kind){if(!off||off+2>v.byteLength)return;let n=u16(off);if(n>300)return;for(let i=0;i<n;i++){let e=off+2+i*12;if(e+12>v.byteLength)break;let tag=u16(e),type=u16(e+2),count=u32(e+4),x=val(e,type,count);if(kind==='m'){if(tag===0x010F)r.make=x;if(tag===0x0110)r.model=x;if(tag===0x0131)r.software=x;if(tag===0x0132)r.modified=x;if(tag===0x8769&&typeof x==='number')ifd(tiff+x,'e');if(tag===0x8825&&typeof x==='number')ifd(tiff+x,'g')}else if(kind==='e'){if(tag===0x9003)r.date=x;if(tag===0xA434)r.lens=x;if(tag===0x8827)r.iso=x;if(tag===0x829A)r.exposure=x;if(tag===0x829D)r.fnumber=x}else{r.g=r.g||{};if(tag===1)r.g.lr=x;if(tag===2)r.g.la=x;if(tag===3)r.g.or=x;if(tag===4)r.g.lo=x;if(tag===6)r.g.alt=x}}}
+ ifd(tiff+u32(tiff+4),'m');
+ if(r.g&&Array.isArray(r.g.la)&&Array.isArray(r.g.lo)){let d=a=>a[0]+a[1]/60+a[2]/3600,la=d(r.g.la),lo=d(r.g.lo);if(r.g.lr==='S')la=-la;if(r.g.or==='W')lo=-lo;r.gps=la.toFixed(6)+', '+lo.toFixed(6);if(typeof r.g.alt==='number')r.alt=r.g.alt.toFixed(1)+' m'}delete r.g;return r
+}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function items(r){let a=[],add=(k,v,risk=false)=>{if(v!==undefined&&v!==null&&v!=='')a.push([k,v,risk])};add('Manufacturer',r.make);add('Device',r.model,true);add('Date taken',r.date,true);add('Modified',r.modified);add('GPS location',r.gps,true);add('Altitude',r.alt);add('Software',r.software);add('Lens',r.lens);add('ISO',r.iso);if(r.exposure)add('Exposure',r.exposure+' sec');if(r.fnumber)add('Aperture','f/'+Number(r.fnumber).toFixed(1));return a}
+function riskScore(r,a){let risk=0;if(r.gps)risk+=45;if(r.model)risk+=15;if(r.date)risk+=20;if(r.software)risk+=5;if(r.make)risk+=5;if(r.blocks.length)risk+=10;return Math.max(0,100-Math.min(100,risk))}
+async function start(f){
+ if(f.type!=='image/jpeg'&&!/\.jpe?g$/i.test(f.name)){alert('MetWipe currently supports JPG/JPEG for lossless metadata cleaning.');return}
+ current=f;
+ if(hero)hero.style.display='none';
+ scan.style.display='block';
+ scan.scrollIntoView({behavior:'smooth',block:'start'});
+ title.textContent='Privacy scan in progress';
+ fn.textContent=f.name+' • '+(f.size/1024/1024).toFixed(2)+' MB';
+ clean.style.display='none';again.style.display='none';
+ const stage=$('#scanStage'), prog=$('#scanProgress'), step=$('#scanStep'), rw=$('#resultsWrap'), overlay=$('#cleanOverlay');
+ stage.classList.add('show');rw.classList.remove('show');overlay.classList.remove('show');output.innerHTML='';
+ prog.style.width='8%'; step.textContent='Reading JPEG structure…';
+
+ try{
+   const buf=await f.arrayBuffer();
+   await new Promise(r=>setTimeout(r,350));
+   prog.style.width='32%';step.textContent='Locating EXIF / XMP / IPTC blocks…';
+   const r=parse(buf),a=items(r),finalScore=riskScore(r,a);currentData=r;
+
+   await new Promise(r=>setTimeout(r,420));
+   prog.style.width='61%';step.textContent='Checking device, timestamp and camera fields…';
+   await new Promise(r=>setTimeout(r,380));
+   prog.style.width='82%';step.textContent=r.gps?'GPS coordinates detected — evaluating risk…':'Checking for GPS coordinates…';
+   await new Promise(r=>setTimeout(r,420));
+   prog.style.width='100%';step.textContent='Building privacy report…';
+   await new Promise(r=>setTimeout(r,300));
+
+   let scoreStart=100;
+   output.innerHTML=`<div class="scorebox scorePop"><div><b>Privacy Score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">${a.length||r.blocks.length?'Metadata detected in this JPEG':'No supported privacy metadata detected'}</div></div><div class="score ${finalScore<80?'bad':'good'}" id="liveScore">100/100</div></div>`+
+   (r.blocks.length?`<div class="row"><div class="key">Metadata blocks</div><div class="val risk">${r.blocks.map(esc).join(', ')}</div></div>`:'')+
+   a.map(x=>`<div class="row"><div class="key">${esc(x[0])}</div><div class="val ${x[2]?'risk':''}">${esc(x[1])}</div></div>`).join('');
+
+   stage.classList.remove('show');
+   rw.classList.add('show');
+   title.textContent='Privacy Scan Complete';
+
+   const scoreEl=$('#liveScore');
+   const ticks=18, diff=100-finalScore;
+   for(let i=1;i<=ticks;i++){
+      await new Promise(r=>setTimeout(r,24));
+      const n=Math.round(100-diff*(i/ticks));
+      scoreEl.textContent=n+'/100';
+   }
+
+   clean.style.display='block';again.style.display='block';
+ }catch(e){
+   stage.classList.remove('show');rw.classList.add('show');
+   title.textContent='Scan failed';
+   output.innerHTML='<div class="verify" style="color:#ff9189">'+esc(e.message)+'</div>';
+   again.style.display='block';
+ }
+}
+function stripJPEG(buf){
+ const v=new DataView(buf),u=new Uint8Array(buf);if(v.getUint16(0)!==0xFFD8)throw Error('Invalid JPEG');
+ let chunks=[u.slice(0,2)],p=2;
+ while(p<u.length){
+  if(p+1>=u.length)break;if(u[p]!==255){chunks.push(u.slice(p));break}
+  let m=u[p+1];if(m===0xDA){chunks.push(u.slice(p));break}if(m===0xD9){chunks.push(u.slice(p));break}
+  if(m>=0xD0&&m<=0xD7){chunks.push(u.slice(p,p+2));p+=2;continue}
+  if(p+4>u.length)break;let len=v.getUint16(p+2);if(len<2||p+2+len>u.length)throw Error('Malformed JPEG segment');
+  let remove=(m>=0xE1&&m<=0xEF)||m===0xFE; // preserve APP0/JFIF for compatibility; strip EXIF/XMP/IPTC/etc.
+  if(!remove)chunks.push(u.slice(p,p+2+len));p+=2+len
+ }
+ return new Blob(chunks,{type:'image/jpeg'})
+}
+clean.onclick=async()=>{
+ clean.disabled=true;clean.style.display='none';again.style.display='none';
+ const ov=$('#cleanOverlay'),rw=$('#resultsWrap'),fs=$('#final100');
+ ov.classList.add('show');rw.style.opacity='.25';
+ title.textContent='Cleaning privacy metadata';
+ const checks=[$('#cc1'),$('#cc2'),$('#cc3'),$('#cc4')];
+ checks.forEach(x=>x.classList.remove('done'));fs.classList.remove('show');
+ try{
+   await new Promise(r=>setTimeout(r,350));checks[0].classList.add('done');
+   const blob=stripJPEG(await current.arrayBuffer());
+   await new Promise(r=>setTimeout(r,350));checks[1].classList.add('done');
+   await new Promise(r=>setTimeout(r,300));checks[2].classList.add('done');
+   const verify=parse(await blob.arrayBuffer()),a=items(verify);
+   await new Promise(r=>setTimeout(r,420));checks[3].classList.add('done');
+   if(verify.blocks.length||a.length)throw Error('Verification detected remaining supported metadata.');
+
+   fs.classList.add('show');
+   let n=45; const startN=(currentData?riskScore(currentData,items(currentData)):45);
+   n=startN;
+   fs.textContent=n+'/100';
+   for(let i=1;i<=20;i++){await new Promise(r=>setTimeout(r,28));fs.textContent=Math.round(startN+(100-startN)*(i/20))+'/100'}
+   await new Promise(r=>setTimeout(r,300));
+
+   let url=URL.createObjectURL(blob),link=document.createElement('a');
+   link.href=url;link.download=current.name.replace(/\.[^.]+$/,'')+'-clean.jpg';
+   document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),2500);
+
+   ov.classList.remove('show');rw.style.opacity='1';
+   title.textContent='Cleaned & Verified';
+   output.innerHTML='<div class="scorebox scorePop"><div><b>Privacy Score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">Cleaned copy re-scanned successfully</div></div><div class="score good">100/100</div></div><div class="verify">✓ Supported EXIF / XMP / IPTC / JPEG comment metadata removed<br>✓ Encoded JPEG image data preserved without another re-encode<br>✓ Cleaned copy verified locally before download<br>✓ Original file unchanged</div>';
+   again.style.display='block';
+ }catch(e){
+   ov.classList.remove('show');rw.style.opacity='1';
+   alert('Cleaning failed: '+e.message);
+   clean.disabled=false;clean.textContent='REMOVE METADATA — LOSSLESS JPEG';clean.style.display='block';again.style.display='block';
+ }
+};
+document.querySelectorAll('[data-mode]').forEach(card=>card.addEventListener('click',()=>{
+  const mode=card.dataset.mode;
+  const label=mode==='gps'?'CHECK PHOTO GPS':mode==='viewer'?'VIEW PHOTO METADATA':'CLEAN PHOTO METADATA';
+  pick.textContent=label;
+}));
+document.querySelectorAll('[data-modal]').forEach(a=>a.onclick=e=>{e.preventDefault();document.getElementById(a.dataset.modal).style.display='block'});document.querySelectorAll('.close').forEach(b=>b.onclick=()=>b.closest('.modal').style.display='none');document.querySelectorAll('.modal').forEach(m=>m.onclick=e=>{if(e.target===m)m.style.display='none'});
+
+
+
+
+/* ===== MetWipe MAX: MP3/WAV/OOXML ===== */
+function sleepMs(ms){return new Promise(r=>setTimeout(r,ms))}
+function extOf(name){const m=/\.([^.]+)$/.exec(name.toLowerCase());return m?m[1]:''}
+function formatKind(f){
+ const e=extOf(f.name);
+ if(f.type==='image/jpeg'||['jpg','jpeg'].includes(e))return'jpeg';
+ if(f.type==='image/png'||e==='png')return'png';
+ if(f.type==='image/webp'||e==='webp')return'webp';
+ if(f.type==='audio/mpeg'||e==='mp3')return'mp3';
+ if(f.type==='audio/wav'||f.type==='audio/x-wav'||e==='wav')return'wav';
+ if(e==='docx'||e==='xlsx'||e==='pptx')return e;
+ return'';
+}
+function syncUF(stepNo,label){
+ const box=$('#universalFlow');box.classList.add('show');
+ for(let i=1;i<=4;i++){const el=$('#uf'+i), b=el.querySelector('b');el.classList.remove('live');if(i<stepNo){el.classList.add('done');b.textContent='DONE'}else if(i===stepNo){el.classList.add('live');b.textContent='RUNNING'}else{el.classList.remove('done');b.textContent='WAIT'}}
+ $('#ufBar').style.width=((stepNo-1)*33)+'%';
+ if(label)$('#ufTitle').textContent=label;
+}
+function finishUF(){
+ for(let i=1;i<=4;i++){const el=$('#uf'+i);el.classList.remove('live');el.classList.add('done');el.querySelector('b').textContent='DONE'}
+ $('#ufBar').style.width='100%';$('#ufTitle').textContent='Cleaned & verified';
+}
+function resetUF(f,k){
+ $('#ufFormat').textContent=k.toUpperCase();$('#ufSub').textContent=f.name+' • '+(f.size/1024/1024).toFixed(2)+' MB';
+ $('#ufBar').style.width='0%';for(let i=1;i<=4;i++){let el=$('#uf'+i);el.classList.remove('live','done');el.querySelector('b').textContent='WAIT'}
+}
+
+/* MP3 */
+function syncsafe(a,o){return ((a[o]&127)<<21)|((a[o+1]&127)<<14)|((a[o+2]&127)<<7)|(a[o+3]&127)}
+function parseMP3(buf){
+ const a=new Uint8Array(buf);let id3v2=false,id3v1=false,v2size=0;
+ if(a.length>=10&&ascii(a,0,3)==='ID3'){id3v2=true;v2size=10+syncsafe(a,6)}
+ if(a.length>=128&&ascii(a,a.length-128,3)==='TAG')id3v1=true;
+ return{format:'MP3',blocks:[...(id3v2?['ID3v2']:[]),...(id3v1?['ID3v1']:[])],v2size}
+}
+function stripMP3(buf){
+ const a=new Uint8Array(buf),m=parseMP3(buf);let start=m.v2size||0,end=a.length-(m.blocks.includes('ID3v1')?128:0);
+ if(start>end)throw Error('Malformed MP3 metadata size');
+ return new Blob([a.slice(start,end)],{type:'audio/mpeg'});
+}
+
+/* WAV / RIFF */
+function parseWAV(buf){
+ const a=new Uint8Array(buf);if(a.length<12||ascii(a,0,4)!=='RIFF'||ascii(a,8,4)!=='WAVE')throw Error('Invalid WAV');
+ let o=12,found=[];const meta=new Set(['LIST','bext','iXML','ID3 ','id3 ','cart','DISP']);
+ while(o+8<=a.length){const t=ascii(a,o,4),len=le32(a,o+4),end=o+8+len+(len&1);if(end>a.length)break;if(meta.has(t))found.push(t.trim());o=end}
+ return{format:'WAV',blocks:[...new Set(found)]}
+}
+function stripWAV(buf){
+ const a=new Uint8Array(buf),meta=new Set(['LIST','bext','iXML','ID3 ','id3 ','cart','DISP']),chunks=[];let o=12,total=4;
+ while(o+8<=a.length){const t=ascii(a,o,4),len=le32(a,o+4),end=o+8+len+(len&1);if(end>a.length)throw Error('Malformed WAV');if(!meta.has(t)){chunks.push(a.slice(o,end));total+=end-o}o=end}
+ const out=new Uint8Array(8+total);out.set([82,73,70,70],0);putLE32(out,4,total);out.set([87,65,86,69],8);let w=12;for(const c of chunks){out.set(c,w);w+=c.length}
+ return new Blob([out],{type:'audio/wav'});
+}
+
+/* ZIP/OOXML reader using browser-native DecompressionStream / CompressionStream.
+   OOXML uses DEFLATE in normal ZIP entries. */
+async function inflateRaw(bytes){
+ if(typeof DecompressionStream==='undefined')throw Error('This browser does not support local OOXML decompression.');
+ const ds=new DecompressionStream('deflate-raw');return new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(ds)).arrayBuffer())
+}
+async function deflateRaw(bytes){
+ if(typeof CompressionStream==='undefined')throw Error('This browser does not support local OOXML compression.');
+ const cs=new CompressionStream('deflate-raw');return new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(cs)).arrayBuffer())
+}
+function findEOCD(a){
+ for(let i=a.length-22;i>=Math.max(0,a.length-65557);i--)if(le32(a,i)===0x06054b50)return i;
+ return-1
+}
+async function readZipEntries(buf){
+ const a=new Uint8Array(buf),eocd=findEOCD(a);if(eocd<0)throw Error('Invalid ZIP/OOXML package');
+ const count=a[eocd+10]|(a[eocd+11]<<8),cdOff=le32(a,eocd+16);let o=cdOff,entries=[];
+ for(let i=0;i<count;i++){
+  if(le32(a,o)!==0x02014b50)throw Error('Invalid central directory');
+  const method=a[o+10]|(a[o+11]<<8),crc=le32(a,o+16),cs=le32(a,o+20),us=le32(a,o+24),nl=a[o+28]|(a[o+29]<<8),xl=a[o+30]|(a[o+31]<<8),cl=a[o+32]|(a[o+33]<<8),lo=le32(a,o+42);
+  const name=new TextDecoder().decode(a.slice(o+46,o+46+nl));
+  if(le32(a,lo)!==0x04034b50)throw Error('Invalid local ZIP entry');
+  const lnl=a[lo+26]|(a[lo+27]<<8),lxl=a[lo+28]|(a[lo+29]<<8),dataStart=lo+30+lnl+lxl,comp=a.slice(dataStart,dataStart+cs);
+  let data;if(method===0)data=comp;else if(method===8)data=await inflateRaw(comp);else throw Error('Unsupported ZIP compression method');
+  entries.push({name,data,method,crc,usize:us});
+  o+=46+nl+xl+cl;
+ }
+ return entries;
+}
+function cleanCoreXml(text){
+ // Remove privacy-oriented core properties while keeping document structure valid.
+ const tags=['dc:creator','cp:lastModifiedBy','dc:title','dc:subject','dc:description','cp:keywords','cp:category','cp:contentStatus','cp:revision'];
+ for(const t of tags){
+   const escT=t.replace(':','\\:');
+   text=text.replace(new RegExp('<'+escT+'(?:\\s[^>]*)?>[\\s\\S]*?<\\/'+escT+'>','gi'),'');
+   text=text.replace(new RegExp('<'+escT+'(?:\\s[^>]*)?\\/\\s*>','gi'),'');
+ }
+ return text;
+}
+async function parseOOXML(buf){
+ const entries=await readZipEntries(buf);let blocks=[];
+ const core=entries.find(e=>e.name==='docProps/core.xml');
+ const app=entries.find(e=>e.name==='docProps/app.xml');
+ if(core){const t=new TextDecoder().decode(core.data);if(/creator|lastModifiedBy|title|subject|description|keywords|revision/i.test(t))blocks.push('Core document properties')}
+ if(app)blocks.push('Application properties');
+ return{format:'OOXML',blocks,entries}
+}
+async function makeZipFromRaw(entries){
+ const enc=new TextEncoder(),locals=[],centrals=[];let offset=0;const dt=dosDateTime();
+ for(const e of entries){
+   const name=enc.encode(e.name),raw=e.data,comp=e.method===0?raw:await deflateRaw(raw),method=e.method===0?0:8,crc=crc32(raw);
+   const l=new Uint8Array(30+name.length+comp.length),v=new DataView(l.buffer);v.setUint32(0,0x04034b50,true);v.setUint16(4,20,true);v.setUint16(8,0,true);v.setUint16(10,method,true);v.setUint16(12,dt.time,true);v.setUint16(14,dt.date,true);v.setUint32(16,crc,true);v.setUint32(20,comp.length,true);v.setUint32(24,raw.length,true);v.setUint16(26,name.length,true);l.set(name,30);l.set(comp,30+name.length);locals.push(l);
+   const c=new Uint8Array(46+name.length),cv=new DataView(c.buffer);cv.setUint32(0,0x02014b50,true);cv.setUint16(4,20,true);cv.setUint16(6,20,true);cv.setUint16(10,method,true);cv.setUint16(12,dt.time,true);cv.setUint16(14,dt.date,true);cv.setUint32(16,crc,true);cv.setUint32(20,comp.length,true);cv.setUint32(24,raw.length,true);cv.setUint16(28,name.length,true);cv.setUint32(42,offset,true);c.set(name,46);centrals.push(c);offset+=l.length;
+ }
+ const cs=centrals.reduce((n,c)=>n+c.length,0),end=new Uint8Array(22),ev=new DataView(end.buffer);ev.setUint32(0,0x06054b50,true);ev.setUint16(8,entries.length,true);ev.setUint16(10,entries.length,true);ev.setUint32(12,cs,true);ev.setUint32(16,offset,true);
+ return new Blob([...locals,...centrals,end],{type:'application/zip'});
+}
+async function stripOOXML(buf){
+ const parsed=await parseOOXML(buf),entries=parsed.entries;
+ for(const e of entries){
+   if(e.name==='docProps/core.xml'){let t=new TextDecoder().decode(e.data);t=cleanCoreXml(t);e.data=new TextEncoder().encode(t)}
+   if(e.name==='docProps/app.xml'){let t=new TextDecoder().decode(e.data);t=t.replace(/<Company>[\s\S]*?<\/Company>/gi,'<Company></Company>').replace(/<Manager>[\s\S]*?<\/Manager>/gi,'<Manager></Manager>');e.data=new TextEncoder().encode(t)}
+ }
+ return await makeZipFromRaw(entries)
+}
+
+async function cleanExtended(f){
+ const k=formatKind(f),buf=await f.arrayBuffer();
+ if(k==='mp3'){const before=parseMP3(buf),blob=stripMP3(buf),after=parseMP3(await blob.arrayBuffer());if(after.blocks.length)throw Error('MP3 verification failed');return{blob,detected:before.blocks.join(', ')||'No ID3 tags found',ext:'mp3'}}
+ if(k==='wav'){const before=parseWAV(buf),blob=stripWAV(buf),after=parseWAV(await blob.arrayBuffer());if(after.blocks.length)throw Error('WAV verification failed');return{blob,detected:before.blocks.join(', ')||'No removable metadata chunks found',ext:'wav'}}
+ if(['docx','xlsx','pptx'].includes(k)){const before=await parseOOXML(buf),blob=await stripOOXML(buf),after=await parseOOXML(await blob.arrayBuffer());const core=after.blocks.filter(x=>x==='Core document properties');if(core.length)throw Error(k.toUpperCase()+' verification failed');return{blob,detected:before.blocks.join(', ')||'No removable core properties found',ext:k}}
+ return null
+}
+
+/* ===== MetWipe Ultimate: PNG/WebP + Batch + ZIP + Receipt ===== */
+let batchFiles=[];
+
+function u8(buf){return new Uint8Array(buf)}
+function ascii(a,o,n){let x='';for(let i=0;i<n;i++)x+=String.fromCharCode(a[o+i]);return x}
+function be32(a,o){return ((a[o]<<24)>>>0)|(a[o+1]<<16)|(a[o+2]<<8)|a[o+3]}
+function le32(a,o){return (a[o]|(a[o+1]<<8)|(a[o+2]<<16)|(a[o+3]<<24))>>>0}
+function putLE32(a,o,v){a[o]=v&255;a[o+1]=(v>>>8)&255;a[o+2]=(v>>>16)&255;a[o+3]=(v>>>24)&255}
+
+function parsePNG(buf){
+ const a=u8(buf), sig=[137,80,78,71,13,10,26,10];
+ if(a.length<8||!sig.every((v,i)=>a[i]===v))throw Error('Invalid PNG');
+ let o=8, found=[];
+ const meta=new Set(['tEXt','zTXt','iTXt','eXIf','tIME']);
+ while(o+12<=a.length){
+   const len=be32(a,o), type=ascii(a,o+4,4);
+   if(o+12+len>a.length)throw Error('Malformed PNG');
+   if(meta.has(type))found.push(type);
+   o+=12+len;if(type==='IEND')break;
+ }
+ return {format:'PNG',blocks:[...new Set(found)]};
+}
+function stripPNG(buf){
+ const a=u8(buf), keep=[a.slice(0,8)], meta=new Set(['tEXt','zTXt','iTXt','eXIf','tIME']);let o=8;
+ while(o+12<=a.length){
+   const len=be32(a,o),type=ascii(a,o+4,4),end=o+12+len;
+   if(end>a.length)throw Error('Malformed PNG');
+   if(!meta.has(type))keep.push(a.slice(o,end));
+   o=end;if(type==='IEND')break;
+ }
+ return new Blob(keep,{type:'image/png'});
+}
+function parseWebP(buf){
+ const a=u8(buf);if(a.length<12||ascii(a,0,4)!=='RIFF'||ascii(a,8,4)!=='WEBP')throw Error('Invalid WebP');
+ let o=12,found=[];
+ while(o+8<=a.length){const type=ascii(a,o,4),len=le32(a,o+4);if(type==='EXIF'||type==='XMP ')found.push(type.trim());o+=8+len+(len&1)}
+ return {format:'WebP',blocks:[...new Set(found)]};
+}
+function stripWebP(buf){
+ const a=u8(buf),chunks=[];let o=12,total=4;
+ while(o+8<=a.length){
+   const type=ascii(a,o,4),len=le32(a,o+4),end=o+8+len+(len&1);
+   if(end>a.length)throw Error('Malformed WebP');
+   if(type!=='EXIF'&&type!=='XMP '){chunks.push(a.slice(o,end));total+=end-o}
+   o=end;
+ }
+ const out=new Uint8Array(8+total);out.set([82,73,70,70],0);putLE32(out,4,total);out.set([87,69,66,80],8);let w=12;
+ chunks.forEach(c=>{out.set(c,w);w+=c.length});
+ return new Blob([out],{type:'image/webp'});
+}
+function kindOf(f){return formatKind(f)}
+async function cleanAny(f){
+ const k=kindOf(f),buf=await f.arrayBuffer();
+ if(k==='jpeg'){const before=parse(buf),blob=stripJPEG(buf),after=parse(await blob.arrayBuffer());if(after.blocks.length||items(after).length)throw Error('JPEG verification failed');return {blob,detected:before.blocks.join(', ')||'EXIF fields',ext:'jpg'}}
+ if(k==='png'){const before=parsePNG(buf),blob=stripPNG(buf),after=parsePNG(await blob.arrayBuffer());if(after.blocks.length)throw Error('PNG verification failed');return {blob,detected:before.blocks.join(', ')||'No removable metadata found',ext:'png'}}
+ if(k==='webp'){const before=parseWebP(buf),blob=stripWebP(buf),after=parseWebP(await blob.arrayBuffer());if(after.blocks.length)throw Error('WebP verification failed');return {blob,detected:before.blocks.join(', ')||'No removable metadata found',ext:'webp'}}
+ const ext=await cleanExtended(f);if(ext)return ext;
+ throw Error('Unsupported file type');
+}
+function crc32(bytes){
+ let c=0xffffffff;for(const b of bytes){c^=b;for(let k=0;k<8;k++)c=(c>>>1)^((c&1)?0xedb88320:0)}return(c^0xffffffff)>>>0
+}
+function dosDateTime(d=new Date()){let time=(d.getHours()<<11)|(d.getMinutes()<<5)|(d.getSeconds()>>1),date=((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate();return{time,date}}
+async function makeZip(entries){
+ const enc=new TextEncoder(),locals=[],centrals=[];let offset=0;const dt=dosDateTime();
+ for(const e of entries){
+   const name=enc.encode(e.name),data=new Uint8Array(await e.blob.arrayBuffer()),crc=crc32(data);
+   const l=new Uint8Array(30+name.length+data.length),v=new DataView(l.buffer);
+   v.setUint32(0,0x04034b50,true);v.setUint16(4,20,true);v.setUint16(8,0,true);v.setUint16(10,0,true);v.setUint16(12,dt.time,true);v.setUint16(14,dt.date,true);v.setUint32(16,crc,true);v.setUint32(20,data.length,true);v.setUint32(24,data.length,true);v.setUint16(26,name.length,true);l.set(name,30);l.set(data,30+name.length);locals.push(l);
+   const c=new Uint8Array(46+name.length),cv=new DataView(c.buffer);cv.setUint32(0,0x02014b50,true);cv.setUint16(4,20,true);cv.setUint16(6,20,true);cv.setUint16(12,0,true);cv.setUint16(14,dt.time,true);cv.setUint16(16,dt.date,true);cv.setUint32(18,crc,true);cv.setUint32(22,data.length,true);cv.setUint32(26,data.length,true);cv.setUint16(28,name.length,true);cv.setUint32(42,offset,true);c.set(name,46);centrals.push(c);offset+=l.length;
+ }
+ const centralSize=centrals.reduce((a,b)=>a+b.length,0),end=new Uint8Array(22),ev=new DataView(end.buffer);ev.setUint32(0,0x06054b50,true);ev.setUint16(8,entries.length,true);ev.setUint16(10,entries.length,true);ev.setUint32(12,centralSize,true);ev.setUint32(16,offset,true);
+ return new Blob([...locals,...centrals,end],{type:'application/zip'});
+}
+function dl(blob,name){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2500)}
+
+const oldChange=file.onchange;
+file.onchange=()=>{
+ const fs=[...(file.files||[])].filter(f=>kindOf(f));
+ if(fs.length>1){batchFiles=fs;showBatch(fs);return}
+ if(fs[0]&&kindOf(fs[0])!=='jpeg'){startUniversal(fs[0]);return}
+ if(oldChange)oldChange();
+};
+drop.addEventListener('drop',e=>{
+ const fs=[...(e.dataTransfer.files||[])].filter(f=>kindOf(f));
+ if(fs.length>1){batchFiles=fs;showBatch(fs)}
+ else if(fs[0]&&kindOf(fs[0])!=='jpeg')startUniversal(fs[0]);
+},{capture:true});
+
+function showBatch(fs){
+ if(hero)hero.style.display='none';scan.style.display='block';scan.scrollIntoView({behavior:'smooth'});
+ title.textContent='Batch Privacy Scan';fn.textContent=fs.length+' supported files';
+ output.innerHTML='';clean.style.display='none';again.style.display='block';
+ const box=$('#batchBox'),list=$('#batchList');box.style.display='block';$('#batchSub').textContent=fs.length+' files ready • JPEG / PNG / WebP / MP3 / WAV / DOCX / XLSX / PPTX';
+ list.innerHTML=fs.map((f,i)=>`<div class="row" style="opacity:1;transform:none"><div class="key">${i+1}. ${esc(f.name)}</div><div class="val">${(f.size/1024/1024).toFixed(2)} MB • ${kindOf(f).toUpperCase()}</div></div>`).join('');
+}
+$('#batchClean').onclick=async()=>{
+ const b=$('#batchClean');b.disabled=true;b.textContent='CLEANING & VERIFYING…';const entries=[],receipt=[];
+ try{
+   for(let i=0;i<batchFiles.length;i++){
+     b.textContent=`CLEANING ${i+1}/${batchFiles.length}…`;
+     const f=batchFiles[i],r=await cleanAny(f),base=f.name.replace(/\.[^.]+$/,'');
+     entries.push({name:base+'-clean.'+r.ext,blob:r.blob});receipt.push(`${f.name}\nDetected: ${r.detected}\nResult: CLEANED + VERIFIED\n`);
+   }
+   entries.push({name:'MetWipe-Privacy-Receipt.txt',blob:new Blob(['MetWipe by Ecrin Labs — Privacy Cleaning Receipt\n\n'+receipt.join('\n')],{type:'text/plain'})});
+   b.textContent='BUILDING ZIP…';const z=await makeZip(entries);dl(z,'MetWipe-cleaned-files.zip');b.textContent='✓ ZIP DOWNLOADED';
+ }catch(e){alert('Batch failed: '+e.message);b.textContent='CLEAN ALL & DOWNLOAD ZIP'}finally{b.disabled=false}
+};
+
+
+async function startUniversal(f){
+ current=f;const k=kindOf(f);if(!k){alert('Unsupported file type');return}
+ if(hero)hero.style.display='none';scan.style.display='block';scan.scrollIntoView({behavior:'smooth'});
+ $('#batchBox').style.display='none';$('#scanStage').classList.remove('show');$('#resultsWrap').classList.remove('show');
+ clean.style.display='none';again.style.display='block';output.innerHTML='';title.textContent='Privacy scan in progress';fn.textContent=f.name+' • '+(f.size/1024/1024).toFixed(2)+' MB';
+ resetUF(f,k);syncUF(1,'Inspecting '+k.toUpperCase()+' structure…');await sleepMs(350);
+ try{
+   let before,buf=await f.arrayBuffer();
+   if(k==='png')before=parsePNG(buf);
+   else if(k==='webp')before=parseWebP(buf);
+   else if(k==='mp3')before=parseMP3(buf);
+   else if(k==='wav')before=parseWAV(buf);
+   else if(['docx','xlsx','pptx'].includes(k))before=await parseOOXML(buf);
+   else throw Error('Unsupported format');
+   syncUF(2,'Detecting privacy metadata…');await sleepMs(430);
+   const detected=before.blocks||[];
+   $('#resultsWrap').classList.add('show');title.textContent='Privacy Scan Complete';
+   output.innerHTML=`<div class="scorebox scorePop"><div><b>Privacy Score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">${detected.length?'Supported metadata detected':'No supported removable metadata detected'}</div></div><div class="score ${detected.length?'bad':'good'}">${detected.length?'70':'100'}/100</div></div><div class="row"><div class="key">Format</div><div class="val">${k.toUpperCase()}</div></div><div class="row"><div class="key">Detected</div><div class="val ${detected.length?'risk':''}">${detected.length?detected.map(esc).join(', '):'None detected'}</div></div>`;
+   clean.style.display='block';clean.disabled=false;clean.textContent='REMOVE METADATA & VERIFY';
+   clean.onclick=async()=>{
+      clean.disabled=true;clean.style.display='none';syncUF(3,'Removing supported metadata…');await sleepMs(450);
+      try{
+        const r=await cleanAny(f);syncUF(4,'Re-opening cleaned file for verification…');await sleepMs(450);finishUF();
+        const mime=k==='docx'?'application/vnd.openxmlformats-officedocument.wordprocessingml.document':k==='xlsx'?'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':k==='pptx'?'application/vnd.openxmlformats-officedocument.presentationml.presentation':r.blob.type;
+        const finalBlob=new Blob([await r.blob.arrayBuffer()],{type:mime});
+        dl(finalBlob,f.name.replace(/\.[^.]+$/,'')+'-clean.'+r.ext);
+        title.textContent='Cleaned & Verified';
+        output.innerHTML='<div class="scorebox scorePop"><div><b>Privacy Score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">Cleaned output verified locally</div></div><div class="score good">100/100</div></div><div class="verify">✓ Supported metadata removed<br>✓ Cleaned file re-opened and verified<br>✓ Original file unchanged<br>✓ Processing performed locally in this browser</div>';
+      }catch(e){alert('Cleaning failed: '+e.message);clean.disabled=false;clean.style.display='block'}
+   };
+ }catch(e){$('#universalFlow').classList.remove('show');$('#resultsWrap').classList.add('show');output.innerHTML='<div class="verify" style="color:#ff8d86">'+esc(e.message)+'</div>';title.textContent='Scan failed'}
+}
+
+async function startModern(f){
+ current=f;if(hero)hero.style.display='none';scan.style.display='block';scan.scrollIntoView({behavior:'smooth'});
+ $('#batchBox').style.display='none';clean.style.display='none';again.style.display='block';title.textContent='Privacy scan in progress';fn.textContent=f.name+' • '+(f.size/1024/1024).toFixed(2)+' MB';
+ const stage=$('#scanStage'),prog=$('#scanProgress'),step=$('#scanStep'),rw=$('#resultsWrap');stage.classList.add('show');rw.classList.remove('show');output.innerHTML='';prog.style.width='12%';
+ try{
+  const k=kindOf(f),buf=await f.arrayBuffer();step.textContent='Reading '+k.toUpperCase()+' structure…';await new Promise(r=>setTimeout(r,300));prog.style.width='55%';
+  const meta=k==='png'?parsePNG(buf):parseWebP(buf);step.textContent='Checking removable metadata chunks…';await new Promise(r=>setTimeout(r,400));prog.style.width='100%';await new Promise(r=>setTimeout(r,250));
+  stage.classList.remove('show');rw.classList.add('show');title.textContent='Privacy Scan Complete';
+  const sc=meta.blocks.length?70:100;
+  output.innerHTML=`<div class="scorebox scorePop"><div><b>Privacy Score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">${meta.blocks.length?'Removable metadata detected':'No supported removable metadata detected'}</div></div><div class="score ${sc<80?'bad':'good'}">${sc}/100</div></div><div class="row"><div class="key">Format</div><div class="val">${meta.format}</div></div><div class="row"><div class="key">Metadata chunks</div><div class="val ${meta.blocks.length?'risk':''}">${meta.blocks.length?meta.blocks.map(esc).join(', '):'None detected'}</div></div>`;
+  clean.style.display='block';
+  clean.onclick=async()=>{clean.disabled=true;clean.textContent='CLEANING & VERIFYING…';try{const r=await cleanAny(f);dl(r.blob,f.name.replace(/\.[^.]+$/,'')+'-clean.'+r.ext);title.textContent='Cleaned & Verified';output.innerHTML='<div class="scorebox scorePop"><div><b>Privacy Score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">Supported metadata removed and output re-scanned</div></div><div class="score good">100/100</div></div><div class="verify">✓ Cleaned locally<br>✓ Output verified<br>✓ Original file unchanged</div>';clean.style.display='none'}catch(e){alert(e.message);clean.disabled=false;clean.textContent='REMOVE METADATA'}};
+ }catch(e){stage.classList.remove('show');rw.classList.add('show');output.innerHTML='<div class="verify" style="color:#ff8d86">'+esc(e.message)+'</div>'}
+}
+
+</script>
+<script>
+/* Lightweight uploader micro-interaction. It does not change the working scanner engine. */
+const _f=document.querySelector('#file'), _sel=document.querySelector('#selected'), _thumb=document.querySelector('#thumb'), _name=document.querySelector('#selname'), _size=document.querySelector('#selsize'), _line=document.querySelector('#scanline');
+if(_f){
+  _f.addEventListener('change',()=>{
+    const f=_f.files&&_f.files[0]; if(!f)return;
+    _name.textContent=f.name; _size.textContent=(f.size/1024/1024).toFixed(2)+' MB • JPEG';
+    try{_thumb.style.backgroundImage='url("'+URL.createObjectURL(f)+'")'}catch(e){}
+    _sel.classList.add('show'); _line.classList.add('show');
+  });
+}
+</script>
+
+<script>
+const GUIDE_DATA={
+ exif:{
+  title:"EXIF Viewer Guide",
+  body:`<p>EXIF metadata can store the camera or phone model, capture date, editing software, exposure settings and sometimes GPS coordinates inside a JPEG.</p><p>Use MetWipe to inspect supported JPEG metadata locally before sharing the original file.</p>`,
+  full:`<h3>What EXIF can contain</h3><p>Common fields include manufacturer, device model, date taken, modified date, software, lens, ISO, exposure, aperture and GPS coordinates. Not every photo contains every field.</p><h3>Why it matters</h3><p>GPS, device identity and timestamps can reveal where, when and with what device a photo was created. This may be sensitive when sharing original JPEG files.</p><h3>How MetWipe checks it</h3><p>MetWipe reads supported EXIF fields locally in your browser. The current build does not send the selected JPEG to an application server.</p>`
+ },
+ remove:{
+  title:"Remove EXIF Guide",
+  body:`<p>MetWipe removes supported JPEG metadata segments without adding another lossy JPEG re-encode cycle.</p><p>The cleaned copy is scanned again before it is reported as verified.</p>`,
+  full:`<h3>What gets removed</h3><p>The current JPEG cleaner targets EXIF/XMP-style APP metadata, IPTC/Photoshop-style metadata and JPEG comments.</p><h3>Why the image quality is preserved</h3><p>The tool copies the encoded JPEG image data and removes metadata segments instead of decoding and compressing the image again.</p><h3>Verification</h3><p>After cleaning, MetWipe scans the generated copy again. If supported metadata is still detected, the tool reports a failure instead of claiming success.</p>`
+ },
+ gps:{
+  title:"GPS Metadata Guide",
+  body:`<p>Some JPEG photos contain latitude, longitude and altitude when location tagging was enabled on the capture device.</p><p>Exact GPS coordinates can reveal where a photo was taken, so MetWipe treats them as a high-risk metadata field.</p>`,
+  full:`<h3>When GPS appears</h3><p>A photo can contain EXIF metadata without GPS. Location fields are present only when the device or editing workflow stored them.</p><h3>What can be exposed</h3><p>Latitude and longitude can point to the exact area where the image was captured. Altitude may also be present.</p><h3>How to reduce the risk</h3><p>Scan original JPEG files before sharing. If GPS is detected, remove supported metadata and verify the cleaned copy before sending it.</p>`
+ },
+ photo:{
+  title:"Photo Metadata Guide",
+  body:`<p>Photo metadata can include device model, timestamps, software, lens, ISO, exposure and other technical details.</p><p>Removing metadata does not hide information visibly present in the image itself.</p>`,
+  full:`<h3>Device and software information</h3><p>Manufacturer, device model and editing software can reveal what created or modified a photo.</p><h3>Date and camera settings</h3><p>Capture time, modified time, lens, ISO, aperture and exposure may all be embedded in a JPEG.</p><h3>Metadata is only one privacy layer</h3><p>Even after metadata removal, visible content can reveal faces, addresses, documents, reflections, license plates or recognizable locations.</p>`
+ }
+};
+document.querySelectorAll('[data-guide]').forEach(a=>{
+ a.addEventListener('click',e=>{
+   e.preventDefault();
+   const g=GUIDE_DATA[a.dataset.guide];
+   document.querySelector('#guideTitle').textContent=g.title;
+   document.querySelector('#guideBody').innerHTML=g.body;
+   document.querySelector('#guideFull').style.display='none';
+   document.querySelector('#guideFull').innerHTML=g.full;
+   document.querySelector('#guideOpenPage').textContent='OPEN FULL GUIDE';
+   document.querySelector('#guideOpenPage').onclick=()=>{
+      const full=document.querySelector('#guideFull');
+      const open=full.style.display!=='none';
+      full.style.display=open?'none':'block';
+      document.querySelector('#guideOpenPage').textContent=open?'OPEN FULL GUIDE':'HIDE FULL GUIDE';
+   };
+   document.querySelector('#guideModal').style.display='block';
+ });
+});
+const gc=document.querySelector('#guideClose');
+if(gc)gc.onclick=()=>document.querySelector('#guideModal').style.display='none';
+</script>
+
+</body></html>

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://metwipe.com/sitemap.xml

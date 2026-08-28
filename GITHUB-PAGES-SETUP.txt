@@ -1,0 +1,29 @@
+METWIPE.COM — GITHUB PAGES PRODUCTION PACKAGE
+
+UPLOAD ALL FILES IN THIS FOLDER TO THE ROOT OF THE PUBLIC GitHub repository.
+
+GitHub:
+1. Repository > Add file > Upload files.
+2. Upload the CONTENTS of this package, not the ZIP itself.
+3. Commit changes.
+4. Settings > Pages.
+5. Source: Deploy from a branch.
+6. Branch: main / (root) > Save.
+7. Custom domain: metwipe.com
+8. DNS must then be configured at Spaceship using the values GitHub shows/recommends.
+9. After DNS resolves, enable Enforce HTTPS.
+
+Already configured:
+- Brand: MetWipe by Ecrin Labs
+- Production domain: https://metwipe.com
+- CNAME: metwipe.com
+- sitemap.xml generated
+- robots.txt points to https://metwipe.com/sitemap.xml
+- canonical URLs use metwipe.com
+- SEO landing pages use metwipe.com
+- .nojekyll included
+
+IMPORTANT:
+- ads.txt is NOT live yet because there is no real AdSense publisher ID. ads.txt.template is intentionally only a note.
+- Do not invent an AdSense publisher ID.
+- Privacy/cookie/consent text should be reviewed again when actual AdSense/analytics services are enabled.

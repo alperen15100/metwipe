@@ -1,0 +1,8 @@
+METWIPE MOTION FIX
+- The previous animation was mostly in the uploader and disappeared too quickly.
+- Scan now has a visible staged animation AFTER the result page opens.
+- Privacy Score visibly counts down from 100 to the calculated score.
+- Cleaning now visibly processes 4 stages and counts back up to 100/100.
+- Result badge changed from confusing 'NO UPLOAD' to 'ON-DEVICE'.
+- Removed stale JavaScript that referenced a deleted 3D scene.
+- SEO, guide pages, AdSense placeholders, Ecrin Labs attribution and contact remain included.
