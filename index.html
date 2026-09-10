@@ -2,7 +2,7 @@
 <!-- METWIPE PRODUCTION • metwipe.com • Ecrin Labs -->
 <html lang="en">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3266016041579839" crossorigin="anonymous"></script>
+  <script>if(new URLSearchParams(location.search).get("embed")!=="1"){const ad=document.createElement("script");ad.async=true;ad.crossOrigin="anonymous";ad.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3266016041579839";document.head.appendChild(ad);}</script>
   <meta name="google-adsense-account" content="ca-pub-3266016041579839">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -95,6 +95,7 @@ footer{border-top:1px solid #1e242d;padding:33px 0 45px;color:#697382;font-size:
 {"@type":"WebApplication","name":"MetWipe","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Local JPEG EXIF viewer, GPS checker and metadata remover."}
 ]}
 </script>
+<script src="metadata-details.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -245,7 +246,7 @@ footer{border-top:1px solid #1e242d;padding:33px 0 45px;color:#697382;font-size:
 <details><summary>What is EXIF metadata?</summary><p>EXIF metadata can contain camera or phone information, timestamps, camera settings and sometimes GPS coordinates inside JPEG files.</p></details>
 <details><summary>Does MetWipe upload my photo?</summary><p>No. The current supported JPEG scanner and cleaner works locally in your browser.</p></details>
 <details><summary>Does metadata removal reduce JPEG quality?</summary><p>The cleaner removes supported metadata segments while keeping the encoded JPEG image data, avoiding an additional image re-encode.</p></details>
-<details><summary>Is a 100/100 Privacy Score a security guarantee?</summary><p>No. The score is a heuristic for supported metadata fields. Visible content can still reveal faces, addresses, documents, landmarks and other information.</p></details>
+<details><summary>Is a 100/100 Supported metadata score a security guarantee?</summary><p>No. The score is a heuristic for supported metadata fields. Visible content can still reveal faces, addresses, documents, landmarks and other information.</p></details>
 </section>
 
 <div class="adslot"></div>
@@ -317,7 +318,7 @@ async function start(f){
    await new Promise(r=>setTimeout(r,300));
 
    let scoreStart=100;
-   output.innerHTML=`<div class="scorebox scorePop"><div><b>Privacy Score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">${a.length||r.blocks.length?'Metadata detected in this JPEG':'No supported privacy metadata detected'}</div></div><div class="score ${finalScore<80?'bad':'good'}" id="liveScore">100/100</div></div>`+
+   output.innerHTML=`<div class="scorebox scorePop"><div><b>Supported metadata score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">${a.length||r.blocks.length?'Metadata detected in this JPEG':'No supported privacy metadata detected'}</div></div><div class="score ${finalScore<80?'bad':'good'}" id="liveScore">100/100</div></div>`+
    (r.blocks.length?`<div class="row"><div class="key">Metadata blocks</div><div class="val risk">${r.blocks.map(esc).join(', ')}</div></div>`:'')+
    a.map(x=>`<div class="row"><div class="key">${esc(x[0])}</div><div class="val ${x[2]?'risk':''}">${esc(x[1])}</div></div>`).join('');
 
@@ -383,7 +384,8 @@ clean.onclick=async()=>{
 
    ov.classList.remove('show');rw.style.opacity='1';
    title.textContent='Cleaned & Verified';
-   output.innerHTML='<div class="scorebox scorePop"><div><b>Privacy Score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">Cleaned copy re-scanned successfully</div></div><div class="score good">100/100</div></div><div class="verify">✓ Supported EXIF / XMP / IPTC / JPEG comment metadata removed<br>✓ Encoded JPEG image data preserved without another re-encode<br>✓ Cleaned copy verified locally before download<br>✓ Original file unchanged</div>';
+   output.innerHTML='<div class="scorebox scorePop"><div><b>Supported metadata score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">Cleaned copy re-scanned successfully</div></div><div class="score good">Verified</div></div><div class="verify">✓ Supported EXIF / XMP / IPTC / JPEG comment metadata removed<br>✓ Encoded JPEG image data preserved without another re-encode<br>✓ Cleaned copy verified locally before download<br>✓ Original file unchanged</div>';
+   output.insertAdjacentHTML('beforeend',comparisonTable({fields:items(currentData).map(x=>[x[0],String(x[1])]),blocks:currentData.blocks},{fields:items(verify).map(x=>[x[0],String(x[1])]),blocks:verify.blocks})+scopeNote('jpeg'));
    again.style.display='block';
  }catch(e){
    ov.classList.remove('show');rw.style.opacity='1';
@@ -431,9 +433,9 @@ function resetUF(f,k){
 
 /* MP3 */
 function syncsafe(a,o){return ((a[o]&127)<<21)|((a[o+1]&127)<<14)|((a[o+2]&127)<<7)|(a[o+3]&127)}
-function parseMP3(buf){
+function parseMP3Blocks(buf){
  const a=new Uint8Array(buf);let id3v2=false,id3v1=false,v2size=0;
- if(a.length>=10&&ascii(a,0,3)==='ID3'){id3v2=true;v2size=10+syncsafe(a,6)}
+ if(a.length>=10&&ascii(a,0,3)==='ID3'){id3v2=true;v2size=10+syncsafe(a,6)+(a[3]===4&&(a[5]&16)?10:0);if(v2size>a.length)throw Error('Malformed ID3 tag size')}
  if(a.length>=128&&ascii(a,a.length-128,3)==='TAG')id3v1=true;
  return{format:'MP3',blocks:[...(id3v2?['ID3v2']:[]),...(id3v1?['ID3v1']:[])],v2size}
 }
@@ -487,29 +489,26 @@ async function readZipEntries(buf){
  return entries;
 }
 function cleanCoreXml(text){
- // Remove privacy-oriented core properties while keeping document structure valid.
- const tags=['dc:creator','cp:lastModifiedBy','dc:title','dc:subject','dc:description','cp:keywords','cp:category','cp:contentStatus','cp:revision'];
- for(const t of tags){
-   const escT=t.replace(':','\\:');
-   text=text.replace(new RegExp('<'+escT+'(?:\\s[^>]*)?>[\\s\\S]*?<\\/'+escT+'>','gi'),'');
-   text=text.replace(new RegExp('<'+escT+'(?:\\s[^>]*)?\\/\\s*>','gi'),'');
- }
- return text;
+ const xml=new DOMParser().parseFromString(text,'application/xml');
+ if(xml.querySelector('parsererror'))throw Error('Invalid document properties XML');
+ const names=new Set(['creator','lastModifiedBy','title','subject','description','keywords','category','contentStatus','revision','created','modified']);
+ for(const node of [...xml.getElementsByTagName('*')])if(names.has(node.localName))node.remove();
+ return new XMLSerializer().serializeToString(xml);
 }
 async function parseOOXML(buf){
  const entries=await readZipEntries(buf);let blocks=[];
  const core=entries.find(e=>e.name==='docProps/core.xml');
  const app=entries.find(e=>e.name==='docProps/app.xml');
- if(core){const t=new TextDecoder().decode(core.data);if(/creator|lastModifiedBy|title|subject|description|keywords|revision/i.test(t))blocks.push('Core document properties')}
- if(app)blocks.push('Application properties');
- return{format:'OOXML',blocks,entries}
+ if(core && officeFields([core]).length)blocks.push('Core document properties')
+ if(app && officeFields([app]).length)blocks.push('Application properties');
+ return{format:'OOXML',blocks,entries,fields:officeFields(entries)}
 }
 async function makeZipFromRaw(entries){
  const enc=new TextEncoder(),locals=[],centrals=[];let offset=0;const dt=dosDateTime();
  for(const e of entries){
    const name=enc.encode(e.name),raw=e.data,comp=e.method===0?raw:await deflateRaw(raw),method=e.method===0?0:8,crc=crc32(raw);
-   const l=new Uint8Array(30+name.length+comp.length),v=new DataView(l.buffer);v.setUint32(0,0x04034b50,true);v.setUint16(4,20,true);v.setUint16(8,0,true);v.setUint16(10,method,true);v.setUint16(12,dt.time,true);v.setUint16(14,dt.date,true);v.setUint32(16,crc,true);v.setUint32(20,comp.length,true);v.setUint32(24,raw.length,true);v.setUint16(26,name.length,true);l.set(name,30);l.set(comp,30+name.length);locals.push(l);
-   const c=new Uint8Array(46+name.length),cv=new DataView(c.buffer);cv.setUint32(0,0x02014b50,true);cv.setUint16(4,20,true);cv.setUint16(6,20,true);cv.setUint16(10,method,true);cv.setUint16(12,dt.time,true);cv.setUint16(14,dt.date,true);cv.setUint32(16,crc,true);cv.setUint32(20,comp.length,true);cv.setUint32(24,raw.length,true);cv.setUint16(28,name.length,true);cv.setUint32(42,offset,true);c.set(name,46);centrals.push(c);offset+=l.length;
+   const l=new Uint8Array(30+name.length+comp.length),v=new DataView(l.buffer);v.setUint32(0,0x04034b50,true);v.setUint16(4,20,true);v.setUint16(6,0x800,true);v.setUint16(8,method,true);v.setUint16(10,dt.time,true);v.setUint16(12,dt.date,true);v.setUint32(14,crc,true);v.setUint32(18,comp.length,true);v.setUint32(22,raw.length,true);v.setUint16(26,name.length,true);l.set(name,30);l.set(comp,30+name.length);locals.push(l);
+   const c=new Uint8Array(46+name.length),cv=new DataView(c.buffer);cv.setUint32(0,0x02014b50,true);cv.setUint16(4,20,true);cv.setUint16(6,20,true);cv.setUint16(8,0x800,true);cv.setUint16(10,method,true);cv.setUint16(12,dt.time,true);cv.setUint16(14,dt.date,true);cv.setUint32(16,crc,true);cv.setUint32(20,comp.length,true);cv.setUint32(24,raw.length,true);cv.setUint16(28,name.length,true);cv.setUint32(42,offset,true);c.set(name,46);centrals.push(c);offset+=l.length;
  }
  const cs=centrals.reduce((n,c)=>n+c.length,0),end=new Uint8Array(22),ev=new DataView(end.buffer);ev.setUint32(0,0x06054b50,true);ev.setUint16(8,entries.length,true);ev.setUint16(10,entries.length,true);ev.setUint32(12,cs,true);ev.setUint32(16,offset,true);
  return new Blob([...locals,...centrals,end],{type:'application/zip'});
@@ -518,7 +517,7 @@ async function stripOOXML(buf){
  const parsed=await parseOOXML(buf),entries=parsed.entries;
  for(const e of entries){
    if(e.name==='docProps/core.xml'){let t=new TextDecoder().decode(e.data);t=cleanCoreXml(t);e.data=new TextEncoder().encode(t)}
-   if(e.name==='docProps/app.xml'){let t=new TextDecoder().decode(e.data);t=t.replace(/<Company>[\s\S]*?<\/Company>/gi,'<Company></Company>').replace(/<Manager>[\s\S]*?<\/Manager>/gi,'<Manager></Manager>');e.data=new TextEncoder().encode(t)}
+   if(e.name==='docProps/app.xml'){const xml=new DOMParser().parseFromString(new TextDecoder().decode(e.data),'application/xml');if(xml.querySelector('parsererror'))throw Error('Invalid application properties XML');for(const node of [...xml.getElementsByTagName('*')])if(['Company','Manager'].includes(node.localName))node.textContent='';e.data=new TextEncoder().encode(new XMLSerializer().serializeToString(xml))}
  }
  return await makeZipFromRaw(entries)
 }
@@ -527,7 +526,7 @@ async function cleanExtended(f){
  const k=formatKind(f),buf=await f.arrayBuffer();
  if(k==='mp3'){const before=parseMP3(buf),blob=stripMP3(buf),after=parseMP3(await blob.arrayBuffer());if(after.blocks.length)throw Error('MP3 verification failed');return{blob,detected:before.blocks.join(', ')||'No ID3 tags found',ext:'mp3'}}
  if(k==='wav'){const before=parseWAV(buf),blob=stripWAV(buf),after=parseWAV(await blob.arrayBuffer());if(after.blocks.length)throw Error('WAV verification failed');return{blob,detected:before.blocks.join(', ')||'No removable metadata chunks found',ext:'wav'}}
- if(['docx','xlsx','pptx'].includes(k)){const before=await parseOOXML(buf),blob=await stripOOXML(buf),after=await parseOOXML(await blob.arrayBuffer());const core=after.blocks.filter(x=>x==='Core document properties');if(core.length)throw Error(k.toUpperCase()+' verification failed');return{blob,detected:before.blocks.join(', ')||'No removable core properties found',ext:k}}
+ if(['docx','xlsx','pptx'].includes(k)){const before=await parseOOXML(buf),blob=await stripOOXML(buf),after=await parseOOXML(await blob.arrayBuffer());if(after.fields.length)throw Error(k.toUpperCase()+' verification failed');return{blob,detected:before.blocks.join(', ')||'No removable core properties found',ext:k}}
  return null
 }
 
@@ -599,8 +598,8 @@ async function makeZip(entries){
  for(const e of entries){
    const name=enc.encode(e.name),data=new Uint8Array(await e.blob.arrayBuffer()),crc=crc32(data);
    const l=new Uint8Array(30+name.length+data.length),v=new DataView(l.buffer);
-   v.setUint32(0,0x04034b50,true);v.setUint16(4,20,true);v.setUint16(8,0,true);v.setUint16(10,0,true);v.setUint16(12,dt.time,true);v.setUint16(14,dt.date,true);v.setUint32(16,crc,true);v.setUint32(20,data.length,true);v.setUint32(24,data.length,true);v.setUint16(26,name.length,true);l.set(name,30);l.set(data,30+name.length);locals.push(l);
-   const c=new Uint8Array(46+name.length),cv=new DataView(c.buffer);cv.setUint32(0,0x02014b50,true);cv.setUint16(4,20,true);cv.setUint16(6,20,true);cv.setUint16(12,0,true);cv.setUint16(14,dt.time,true);cv.setUint16(16,dt.date,true);cv.setUint32(18,crc,true);cv.setUint32(22,data.length,true);cv.setUint32(26,data.length,true);cv.setUint16(28,name.length,true);cv.setUint32(42,offset,true);c.set(name,46);centrals.push(c);offset+=l.length;
+   v.setUint32(0,0x04034b50,true);v.setUint16(4,20,true);v.setUint16(6,0x800,true);v.setUint16(8,0,true);v.setUint16(10,dt.time,true);v.setUint16(12,dt.date,true);v.setUint32(14,crc,true);v.setUint32(18,data.length,true);v.setUint32(22,data.length,true);v.setUint16(26,name.length,true);l.set(name,30);l.set(data,30+name.length);locals.push(l);
+   const c=new Uint8Array(46+name.length),cv=new DataView(c.buffer);cv.setUint32(0,0x02014b50,true);cv.setUint16(4,20,true);cv.setUint16(6,20,true);cv.setUint16(8,0x800,true);cv.setUint16(10,0,true);cv.setUint16(12,dt.time,true);cv.setUint16(14,dt.date,true);cv.setUint32(16,crc,true);cv.setUint32(20,data.length,true);cv.setUint32(24,data.length,true);cv.setUint16(28,name.length,true);cv.setUint32(42,offset,true);c.set(name,46);centrals.push(c);offset+=l.length;
  }
  const centralSize=centrals.reduce((a,b)=>a+b.length,0),end=new Uint8Array(22),ev=new DataView(end.buffer);ev.setUint32(0,0x06054b50,true);ev.setUint16(8,entries.length,true);ev.setUint16(10,entries.length,true);ev.setUint32(12,centralSize,true);ev.setUint32(16,offset,true);
  return new Blob([...locals,...centrals,end],{type:'application/zip'});
@@ -616,8 +615,8 @@ file.onchange=()=>{
 };
 drop.addEventListener('drop',e=>{
  const fs=[...(e.dataTransfer.files||[])].filter(f=>kindOf(f));
- if(fs.length>1){batchFiles=fs;showBatch(fs)}
- else if(fs[0]&&kindOf(fs[0])!=='jpeg')startUniversal(fs[0]);
+ if(fs.length>1){e.stopImmediatePropagation();e.preventDefault();drop.classList.remove('drag');batchFiles=fs;showBatch(fs)}
+ else if(fs[0]&&kindOf(fs[0])!=='jpeg'){e.stopImmediatePropagation();e.preventDefault();drop.classList.remove('drag');startUniversal(fs[0]);}
 },{capture:true});
 
 function showBatch(fs){
@@ -658,7 +657,8 @@ async function startUniversal(f){
    syncUF(2,'Detecting privacy metadata…');await sleepMs(430);
    const detected=before.blocks||[];
    $('#resultsWrap').classList.add('show');title.textContent='Privacy Scan Complete';
-   output.innerHTML=`<div class="scorebox scorePop"><div><b>Privacy Score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">${detected.length?'Supported metadata detected':'No supported removable metadata detected'}</div></div><div class="score ${detected.length?'bad':'good'}">${detected.length?'70':'100'}/100</div></div><div class="row"><div class="key">Format</div><div class="val">${k.toUpperCase()}</div></div><div class="row"><div class="key">Detected</div><div class="val ${detected.length?'risk':''}">${detected.length?detected.map(esc).join(', '):'None detected'}</div></div>`;
+   output.innerHTML=`<div class="scorebox scorePop"><div><b>Supported metadata score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">${detected.length?'Supported metadata detected':'No supported removable metadata detected'}</div></div><div class="score ${detected.length?'bad':'good'}">${detected.length?'Found':'None found'}</div></div><div class="row"><div class="key">Format</div><div class="val">${k.toUpperCase()}</div></div><div class="row"><div class="key">Detected</div><div class="val ${detected.length?'risk':''}">${detected.length?detected.map(esc).join(', '):'None detected'}</div></div>`;
+   output.insertAdjacentHTML('beforeend',metadataTable(before)+scopeNote(k));
    clean.style.display='block';clean.disabled=false;clean.textContent='REMOVE METADATA & VERIFY';
    clean.onclick=async()=>{
       clean.disabled=true;clean.style.display='none';syncUF(3,'Removing supported metadata…');await sleepMs(450);
@@ -668,7 +668,9 @@ async function startUniversal(f){
         const finalBlob=new Blob([await r.blob.arrayBuffer()],{type:mime});
         dl(finalBlob,f.name.replace(/\.[^.]+$/,'')+'-clean.'+r.ext);
         title.textContent='Cleaned & Verified';
-        output.innerHTML='<div class="scorebox scorePop"><div><b>Privacy Score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">Cleaned output verified locally</div></div><div class="score good">100/100</div></div><div class="verify">✓ Supported metadata removed<br>✓ Cleaned file re-opened and verified<br>✓ Original file unchanged<br>✓ Processing performed locally in this browser</div>';
+        output.innerHTML='<div class="scorebox scorePop"><div><b>Supported metadata score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">Cleaned output verified locally</div></div><div class="score good">Verified</div></div><div class="verify">✓ Supported metadata removed<br>✓ Cleaned file re-opened and verified<br>✓ Original file unchanged<br>✓ Processing performed locally in this browser</div>';
+        const after=await inspectMetadata(await finalBlob.arrayBuffer(),k);
+        output.insertAdjacentHTML('beforeend',comparisonTable(before,after)+scopeNote(k));
       }catch(e){alert('Cleaning failed: '+e.message);clean.disabled=false;clean.style.display='block'}
    };
  }catch(e){$('#universalFlow').classList.remove('show');$('#resultsWrap').classList.add('show');output.innerHTML='<div class="verify" style="color:#ff8d86">'+esc(e.message)+'</div>';title.textContent='Scan failed'}
@@ -683,9 +685,9 @@ async function startModern(f){
   const meta=k==='png'?parsePNG(buf):parseWebP(buf);step.textContent='Checking removable metadata chunks…';await new Promise(r=>setTimeout(r,400));prog.style.width='100%';await new Promise(r=>setTimeout(r,250));
   stage.classList.remove('show');rw.classList.add('show');title.textContent='Privacy Scan Complete';
   const sc=meta.blocks.length?70:100;
-  output.innerHTML=`<div class="scorebox scorePop"><div><b>Privacy Score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">${meta.blocks.length?'Removable metadata detected':'No supported removable metadata detected'}</div></div><div class="score ${sc<80?'bad':'good'}">${sc}/100</div></div><div class="row"><div class="key">Format</div><div class="val">${meta.format}</div></div><div class="row"><div class="key">Metadata chunks</div><div class="val ${meta.blocks.length?'risk':''}">${meta.blocks.length?meta.blocks.map(esc).join(', '):'None detected'}</div></div>`;
+  output.innerHTML=`<div class="scorebox scorePop"><div><b>Supported metadata score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">${meta.blocks.length?'Removable metadata detected':'No supported removable metadata detected'}</div></div><div class="score ${sc<80?'bad':'good'}">${sc}/100</div></div><div class="row"><div class="key">Format</div><div class="val">${meta.format}</div></div><div class="row"><div class="key">Metadata chunks</div><div class="val ${meta.blocks.length?'risk':''}">${meta.blocks.length?meta.blocks.map(esc).join(', '):'None detected'}</div></div>`;
   clean.style.display='block';
-  clean.onclick=async()=>{clean.disabled=true;clean.textContent='CLEANING & VERIFYING…';try{const r=await cleanAny(f);dl(r.blob,f.name.replace(/\.[^.]+$/,'')+'-clean.'+r.ext);title.textContent='Cleaned & Verified';output.innerHTML='<div class="scorebox scorePop"><div><b>Privacy Score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">Supported metadata removed and output re-scanned</div></div><div class="score good">100/100</div></div><div class="verify">✓ Cleaned locally<br>✓ Output verified<br>✓ Original file unchanged</div>';clean.style.display='none'}catch(e){alert(e.message);clean.disabled=false;clean.textContent='REMOVE METADATA'}};
+  clean.onclick=async()=>{clean.disabled=true;clean.textContent='CLEANING & VERIFYING…';try{const r=await cleanAny(f);dl(r.blob,f.name.replace(/\.[^.]+$/,'')+'-clean.'+r.ext);title.textContent='Cleaned & Verified';output.innerHTML='<div class="scorebox scorePop"><div><b>Supported metadata score</b><div style="color:#8790a3;font-size:12px;margin-top:5px">Supported metadata removed and output re-scanned</div></div><div class="score good">Verified</div></div><div class="verify">✓ Cleaned locally<br>✓ Output verified<br>✓ Original file unchanged</div>';clean.style.display='none'}catch(e){alert(e.message);clean.disabled=false;clean.textContent='REMOVE METADATA'}};
  }catch(e){stage.classList.remove('show');rw.classList.add('show');output.innerHTML='<div class="verify" style="color:#ff8d86">'+esc(e.message)+'</div>'}
 }
 
@@ -748,5 +750,6 @@ const gc=document.querySelector('#guideClose');
 if(gc)gc.onclick=()=>document.querySelector('#guideModal').style.display='none';
 </script>
 
+<script src="embed-tool.js"></script>
 <script src="webmcp.js"></script>
 </body></html>
