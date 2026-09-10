@@ -1,0 +1,42 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "name": "MetWipe",
+    "url": "https://metwipe.com/"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:metwipe.com:skill:mp3-metadata-removal",
+      "displayName": "MetWipe MP3 Metadata Removal",
+      "type": "text/markdown",
+      "url": "https://metwipe.com/.well-known/agent-skills/mp3-metadata-removal/SKILL.md",
+      "representativeQueries": [
+        "How can I remove metadata from an MP3?",
+        "Remove ID3 tags from an MP3 locally",
+        "How do I clean MP3 metadata without uploading my audio?"
+      ]
+    },
+    {
+      "identifier": "urn:air:metwipe.com:skill:image-metadata-removal",
+      "displayName": "MetWipe Image Metadata Removal",
+      "type": "text/markdown",
+      "url": "https://metwipe.com/.well-known/agent-skills/image-metadata-removal/SKILL.md",
+      "representativeQueries": [
+        "How can I remove EXIF metadata from a photo?",
+        "Remove GPS metadata from an image locally",
+        "Clean photo metadata before sharing"
+      ]
+    },
+    {
+      "identifier": "urn:air:metwipe.com:skill:office-metadata-removal",
+      "displayName": "MetWipe Office Metadata Removal",
+      "type": "text/markdown",
+      "url": "https://metwipe.com/.well-known/agent-skills/office-metadata-removal/SKILL.md",
+      "representativeQueries": [
+        "How can I remove metadata from a Word document?",
+        "Clean metadata from an XLSX file locally",
+        "Remove supported metadata from a PowerPoint file"
+      ]
+    }
+  ]
+}
