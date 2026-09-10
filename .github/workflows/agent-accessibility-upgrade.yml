@@ -10,128 +10,16 @@ permissions:
 
 jobs:
   patch:
-    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Patch index.html safely
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          p = Path('index.html')
-          s = p.read_text(encoding='utf-8')
-
-          def replace_once(old, new, label):
-              global s
-              if old not in s:
-                  raise SystemExit(f'Missing expected pattern: {label}')
-              s = s.replace(old, new, 1)
-
-          # Accessibility helpers.
-          if '.skip-link{' not in s:
-              replace_once('</style>', '''\n.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}.skip-link:focus{left:12px;top:12px;width:auto;height:auto;overflow:visible;z-index:9999;padding:10px 12px;border-radius:8px;background:#fff;color:#000;font-size:12px;font-weight:800}.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}.drop-title{font-size:16px;margin:0;font-weight:700}\n</style>''', 'style close')
-
-          if 'class="skip-link"' not in s:
-              replace_once('<body>', '<body>\n<a class="skip-link" href="#main-content">Skip to main content</a>', 'body')
-
-          # Semantic landmarks without changing visual layout.
-          if '<header>' not in s:
-              replace_once('<nav>', '<header>\n<nav>', 'nav open')
-              replace_once('</nav>', '</nav>\n</header>', 'nav close')
-
-          if '<main id="main-content">' not in s:
-              replace_once('</header>\n\n<section class="hero" id="scanner">', '</header>\n<main id="main-content">\n\n<section class="hero" id="scanner">', 'main open')
-              replace_once('<div class="adslot"></div>\n<footer>', '<div class="adslot"></div>\n</main>\n<footer>', 'main close')
-
-          # Accessible file input while retaining the same UI and JS behavior.
-          old_input = '<input id="file" type="file" accept="image/jpeg,image/png,image/webp,audio/mpeg,audio/wav,.mp3,.wav,.docx,.xlsx,.pptx" multiple hidden>'
-          if 'for="file" class="sr-only"' not in s:
-              replace_once(old_input, '<label for="file" class="sr-only">Choose files to scan for metadata</label>\n' + old_input.replace(' multiple hidden>', ' multiple hidden aria-label="Choose files to scan for metadata">'), 'file input')
-
-          # Fix the heading jump in the upload card without changing appearance.
-          if '<h3>Drop photos here</h3>' in s:
-              s = s.replace('<h3>Drop photos here</h3>', '<p class="drop-title">Drop photos here</p>', 1)
-
-          # Progressive WebMCP registration. Unsupported browsers simply ignore it.
-          if 'metwipe_open_file_picker' not in s:
-              webmcp = r'''
-<script>
-/* Progressive WebMCP exposure for supported browsers. Files stay local. */
-(async()=>{
-  const mc = document.modelContext || navigator.modelContext;
-  if(!mc || typeof mc.registerTool !== 'function') return;
-  const register = tool => Promise.resolve(mc.registerTool(tool)).catch(()=>{});
-
-  await register({
-    name:'metwipe_describe_capabilities',
-    description:'Describe MetWipe supported local metadata inspection and cleaning capabilities. No file is uploaded by this tool.',
-    inputSchema:{type:'object',properties:{}},
-    annotations:{readOnlyHint:true},
-    execute:async()=>JSON.stringify({
-      processing:'local-browser',
-      formats:['JPEG','PNG','WebP','MP3','WAV','DOCX','XLSX','PPTX'],
-      note:'Support varies by format; MetWipe does not claim universal removal of proprietary or exotic metadata.'
-    })
-  });
-
-  await register({
-    name:'metwipe_open_file_picker',
-    description:'Open the MetWipe local file picker so the user can choose a supported file for metadata inspection. User interaction is required and the file remains in the browser.',
-    inputSchema:{type:'object',properties:{}},
-    annotations:{readOnlyHint:false},
-    execute:async()=>{
-      const el=document.getElementById('file');
-      if(!el) return 'File picker is unavailable on this page.';
-      el.click();
-      return 'File picker opened. The user must choose a file before scanning.';
-    }
-  });
-
-  await register({
-    name:'metwipe_scan_selected_file',
-    description:'Scan the file already selected by the user with MetWipe using the existing local browser scanner. This does not upload the file to a MetWipe application server.',
-    inputSchema:{type:'object',properties:{}},
-    annotations:{readOnlyHint:true},
-    execute:async()=>{
-      const el=document.getElementById('file');
-      if(!el || !el.files || !el.files[0]) return 'No file selected. Ask the user to choose a supported file first.';
-      if(typeof start !== 'function') return 'Scanner is not ready.';
-      await start(el.files[0]);
-      return 'Local metadata scan started for the user-selected file.';
-    }
-  });
-
-  await register({
-    name:'metwipe_clean_selected_file',
-    description:'Run MetWipe existing cleaner for the currently selected and scanned file. Cleaning follows the format-specific local workflow and creates a cleaned copy.',
-    inputSchema:{type:'object',properties:{}},
-    annotations:{readOnlyHint:false},
-    execute:async()=>{
-      const btn=document.getElementById('clean');
-      if(!btn || btn.disabled) return 'No cleanable scanned file is ready.';
-      btn.click();
-      return 'Local cleaning workflow started. The user remains in control of the generated cleaned copy.';
-    }
-  });
-})();
-</script>
-'''
-              replace_once('\n</body></html>', '\n' + webmcp + '\n</body></html>', 'body close')
-
-          p.write_text(s, encoding='utf-8')
-          PY
-
-      - name: Verify patch
-        run: |
-          grep -q 'metwipe_open_file_picker' index.html
-          grep -q '<main id="main-content">' index.html
-          grep -q 'for="file" class="sr-only"' index.html
-          grep -q 'class="skip-link"' index.html
-
-      - name: Commit patch
+      - name: Patch index
+        run: python scripts/upgrade_index.py
+      - name: Commit changes
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
-          git commit -m 'Add progressive WebMCP and accessibility landmarks'
+          git diff --cached --quiet && exit 0
+          git commit -m 'Add WebMCP and accessibility improvements'
           git push
