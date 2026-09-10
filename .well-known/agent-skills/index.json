@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "mp3-metadata-removal",
+      "type": "skill-md",
+      "description": "Inspect and remove supported ID3v1 and ID3v2 metadata from MP3 files locally in the browser.",
+      "url": "https://metwipe.com/.well-known/agent-skills/mp3-metadata-removal/SKILL.md",
+      "digest": "sha256:5fc8b67af906093792c3f92d285bfae4b13440692ac37747fdfbb7d8c1f99471"
+    },
+    {
+      "name": "image-metadata-removal",
+      "type": "skill-md",
+      "description": "Inspect and clean supported EXIF, GPS and other supported metadata from JPEG, PNG and WebP images locally in the browser.",
+      "url": "https://metwipe.com/.well-known/agent-skills/image-metadata-removal/SKILL.md",
+      "digest": "sha256:b9c9edec526d2c49f2c5b169fb26c0c83ab4fb947e620adb6d7d4ce7547e767f"
+    },
+    {
+      "name": "office-metadata-removal",
+      "type": "skill-md",
+      "description": "Remove supported metadata from DOCX, XLSX and PPTX files locally in the browser.",
+      "url": "https://metwipe.com/.well-known/agent-skills/office-metadata-removal/SKILL.md",
+      "digest": "sha256:c9ca1ce8645d30acb6114cb2610f0ba85bf1eceb555b3d506b5a552848970f0d"
+    }
+  ]
+}
