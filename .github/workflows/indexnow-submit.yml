@@ -1,0 +1,72 @@
+name: Submit sitemap URLs to IndexNow
+
+on:
+  push:
+    paths:
+      - '.github/workflows/indexnow-submit.yml'
+  workflow_dispatch:
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for GitHub Pages key file
+        shell: bash
+        run: |
+          set -e
+          KEY='22158cd823774663a28d9e1a866f39a7'
+          KEY_URL="https://metwipe.com/${KEY}.txt"
+          echo "Waiting for $KEY_URL"
+          for i in {1..20}; do
+            BODY="$(curl -fsSL "$KEY_URL" 2>/dev/null || true)"
+            if [ "$BODY" = "$KEY" ]; then
+              echo "IndexNow key is live."
+              exit 0
+            fi
+            echo "Attempt $i/20: not live yet; waiting 15s..."
+            sleep 15
+          done
+          echo "Key file did not become available in time."
+          exit 1
+
+      - name: Submit all sitemap URLs to IndexNow
+        shell: bash
+        run: |
+          set -euo pipefail
+          KEY='22158cd823774663a28d9e1a866f39a7'
+          SITEMAP='https://metwipe.com/sitemap.xml'
+          curl -fsSL "$SITEMAP" -o sitemap.xml
+
+          python3 - <<'PY'
+          import json, xml.etree.ElementTree as ET
+          tree = ET.parse('sitemap.xml')
+          root = tree.getroot()
+          ns = {'sm': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          urls = [e.text.strip() for e in root.findall('sm:url/sm:loc', ns) if e.text]
+          print(f'Found {len(urls)} URLs in sitemap.')
+          if len(urls) != 31:
+              raise SystemExit(f'Expected 31 URLs, found {len(urls)}; aborting to avoid an unintended submission.')
+          payload = {
+              'host': 'metwipe.com',
+              'key': '22158cd823774663a28d9e1a866f39a7',
+              'keyLocation': 'https://metwipe.com/22158cd823774663a28d9e1a866f39a7.txt',
+              'urlList': urls,
+          }
+          with open('payload.json', 'w', encoding='utf-8') as f:
+              json.dump(payload, f, ensure_ascii=False)
+          print('\n'.join(urls))
+          PY
+
+          HTTP_CODE="$(curl -sS -o response.txt -w '%{http_code}' \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -X POST \
+            --data-binary @payload.json \
+            https://api.indexnow.org/IndexNow)"
+
+          echo "IndexNow HTTP status: $HTTP_CODE"
+          cat response.txt || true
+          if [ "$HTTP_CODE" != '200' ] && [ "$HTTP_CODE" != '202' ]; then
+            echo "IndexNow submission failed."
+            exit 1
+          fi
+          echo "Successfully submitted all 31 MetWipe sitemap URLs to IndexNow."
