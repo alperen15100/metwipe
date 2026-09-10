@@ -1,0 +1,53 @@
+# MetWipe
+
+> MetWipe by Ecrin Labs is a privacy-first browser tool for inspecting and removing supported metadata from files. Supported cleaning happens locally in the user's browser; files are not uploaded to a MetWipe application server for processing.
+
+## Main tool
+- https://metwipe.com/ — Inspect, clean, and verify supported photo metadata in the browser.
+
+## Photo metadata
+- https://metwipe.com/remove-exif.html — Remove supported EXIF metadata from photos.
+- https://metwipe.com/gps-metadata.html — Inspect and remove supported GPS/location metadata.
+- https://metwipe.com/photo-metadata.html — Photo metadata information and tools.
+- https://metwipe.com/exif-viewer.html — Inspect supported EXIF metadata.
+- https://metwipe.com/batch-photo-metadata-remover.html — Batch photo metadata cleaning.
+- https://metwipe.com/remove-png-metadata.html — Remove supported PNG metadata.
+- https://metwipe.com/remove-webp-metadata.html — Remove supported WebP metadata.
+
+## Audio metadata
+- https://metwipe.com/remove-mp3-metadata.html — Remove supported ID3v1/ID3v2 metadata from MP3 files without re-encoding the audio payload.
+- https://metwipe.com/remove-id3-tags-mp3.html — ID3 tag removal guide/tool page.
+- https://metwipe.com/remove-wav-metadata.html — Remove supported WAV metadata.
+
+## Office document metadata
+- https://metwipe.com/remove-docx-metadata.html — Remove supported DOCX metadata.
+- https://metwipe.com/word-metadata-remover.html — Word metadata removal information/tool page.
+- https://metwipe.com/remove-author-from-word-document.html — Remove supported author metadata from Word documents.
+- https://metwipe.com/remove-xlsx-metadata.html — Remove supported XLSX metadata.
+- https://metwipe.com/remove-pptx-metadata.html — Remove supported PPTX metadata.
+
+## Guides
+- https://metwipe.com/what-is-exif-metadata.html — EXIF metadata guide.
+- https://metwipe.com/how-gps-metadata-works.html — GPS metadata guide.
+- https://metwipe.com/remove-metadata-before-sharing-photos.html — Photo sharing privacy guide.
+- https://metwipe.com/photo-metadata-privacy-guide.html — Photo metadata privacy guide.
+- https://metwipe.com/what-is-id3-metadata.html — ID3 metadata guide.
+- https://metwipe.com/mp3-metadata-privacy-guide.html — MP3 metadata privacy guide.
+- https://metwipe.com/what-metadata-is-in-word-documents.html — Word document metadata guide.
+- https://metwipe.com/metadata-privacy-checklist.html — Metadata privacy checklist.
+
+## Site information
+- https://metwipe.com/about.html — About MetWipe and Ecrin Labs.
+- https://metwipe.com/privacy.html — Privacy policy.
+- https://metwipe.com/terms.html — Terms of use.
+- https://metwipe.com/contact.html — Contact.
+- https://metwipe.com/sitemap.xml — Sitemap.
+
+## Agent discovery
+- https://metwipe.com/.well-known/agent-skills/index.json — Published Agent Skills discovery index.
+- https://metwipe.com/.well-known/ai-catalog.json — AI resource discovery manifest.
+
+## Important capability notes
+- Do not assume MetWipe provides a public server-side API, OAuth/OIDC service, or MCP server unless one is explicitly published in the future.
+- Metadata support varies by file format. MetWipe does not claim to remove every proprietary or exotic metadata structure.
+- User file selection and local browser processing are central to the privacy model.
