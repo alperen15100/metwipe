@@ -29,7 +29,7 @@ footer{border-top:1px solid #1e2331;padding:32px 0 45px;color:#727b8e;font-size:
 @media(max-width:820px){.navlinks{display:none}.hero{grid-template-columns:1fr;padding-top:20px;gap:5px}.scene{order:-1;height:310px}.vault{transform:scale(.8)}.ring{width:300px}.hero h1{letter-spacing:-2.5px}.grid3{grid-template-columns:1fr}.row{grid-template-columns:115px 1fr}.section{padding:55px 0}.scorebox{align-items:flex-start}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
 </style>
-</head>
+<link rel="stylesheet" href="review.css"></head>
 <body>
 <div class="wrap">
 <nav><a class="brand" href="index.html"><span class="mark">◆</span><span>MetWipe <small style="display:block;font-size:9px;letter-spacing:.12em;color:#8d96aa;font-weight:800">BY ECRIN LABS</small></span></a><div class="navlinks"><a href="index.html#tools">Tools</a><a href="index.html#privacy">Privacy</a><a href="index.html#faq">FAQ</a></div><span class="pill">● LOCAL PROCESSING</span></nav>
@@ -41,13 +41,13 @@ footer{border-top:1px solid #1e2331;padding:32px 0 45px;color:#727b8e;font-size:
 </section>
 <section class="section"><div class="grid3"><div class="feature"><h3>What is removed</h3><p>The current JPEG cleaner targets EXIF/XMP-style APP metadata, IPTC/Photoshop-style metadata and JPEG comments while preserving core image data and common compatibility segments.</p></div><div class="feature"><h3>Why verification matters</h3><p>After cleaning, MetWipe scans the generated copy again. If supported metadata is still detected, the tool reports a verification failure instead of pretending the file is clean.</p></div><div class="feature"><h3>Keep your original</h3><p>The original photo is not overwritten. MetWipe creates a separate cleaned copy for download.</p></div></div></section>
 <section class="section"><div class="panel"><h2>Use the free MetWipe scanner</h2><p class="sub">Inspect supported JPG/JPEG metadata, review privacy-relevant fields, remove supported metadata and verify the cleaned copy locally in your browser.</p><a class="btn" href="index.html#scanner" style="display:inline-block;margin-top:16px">SCAN A JPEG</a></div></section>
-<footer><div class="foot"><span>© 2026 MetWipe — an Ecrin Labs project.</span><div class="footlinks"><a href="index.html">Home</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="about.html">About</a><a href="contact.html">Contact</a></div></div></footer>
+<section class="review-guide"><h2>JPEG EXIF and GPS cleanup</h2><p>JPEG metadata is stored in segments around the encoded image. The cleaner removes supported application and comment segments rather than decoding and recompressing the picture. This can remove useful descriptive information as well as privacy-related fields.</p><h2>Check a non-sensitive example</h2><p>Use a non-sensitive JPEG with a known capture date or camera model. Note the reported fields, clean the file, download the output and reopen it in both the scanner and an image viewer. Compare dimensions and visible appearance. A smaller file does not by itself prove that every private field is absent.</p><h2>What remains outside this check?</h2><p>GPS is not always present. A screenshot or a previously processed image may have no GPS tag while still showing an address or recognizable location in its pixels. Those clues are outside metadata cleanup.</p><h2>If the result is unexpected</h2><p>Check that you selected the downloaded copy rather than the original. Read any error before retrying. Try a smaller, non-sensitive file in the same format to distinguish a file-specific issue from a browser limitation. If the problem persists, describe the format, browser and error through <a href="contact.html">Contact</a>.</p><p><a href="supported-formats.html">Exact supported structures and limitations</a> · <a href="metadata-privacy-checklist.html">Before-sharing checklist</a> · <a href="tools.html">All tools</a></p></section><footer><div class="foot"><span>© 2026 MetWipe — an Ecrin Labs project.</span><div class="footlinks"><a href="index.html">Home</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="about.html">About</a><a href="contact.html">Contact</a></div></div><p class="review-links"><a href="tools.html">All tools</a> · <a href="supported-formats.html">Formats &amp; limits</a> · <a href="editorial-policy.html">Editorial policy</a></p></footer>
 </div>
 
 <section class="section">
   <div class="card">
     <h2>Privacy Guides</h2>
-    <p><a href="what-is-exif-metadata.html">What Is EXIF Metadata?</a> · <a href="remove-metadata-before-sharing-photos.html">Remove Metadata Before Sharing Photos</a></p>
+    <p><a href="what-is-exif-metadata.html">What Is EXIF Metadata?</a> · <a href="metadata-privacy-checklist.html">Remove Metadata Before Sharing Photos</a></p>
   </div>
 </section>
 

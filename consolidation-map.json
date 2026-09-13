@@ -1,0 +1,11 @@
+{
+  "remove-id3-tags-mp3.html": "remove-mp3-metadata.html",
+  "word-metadata-remover.html": "remove-docx-metadata.html",
+  "remove-author-from-word-document.html": "remove-docx-metadata.html",
+  "remove-image-metadata-online.html": "remove-exif.html",
+  "remove-location-data-from-photos.html": "remove-exif.html",
+  "remove-gps-from-jpeg.html": "remove-exif.html",
+  "gps-metadata.html": "how-gps-metadata-works.html",
+  "photo-metadata.html": "photo-metadata-privacy-guide.html",
+  "remove-metadata-before-sharing-photos.html": "metadata-privacy-checklist.html"
+}

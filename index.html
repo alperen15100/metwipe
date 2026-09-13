@@ -96,14 +96,14 @@ footer{border-top:1px solid #1e242d;padding:33px 0 45px;color:#697382;font-size:
 ]}
 </script>
 <script src="metadata-details.js"></script>
-</head>
+<link rel="stylesheet" href="review.css"></head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="wrap">
 <header>
 <nav>
 <a class="brand" href="#"><span class="logo">◆</span><span>MetWipe<span class="by">BY ECRIN LABS</span></span></a>
-<div class="navlinks"><a href="#scanner">Scanner</a><a href="#how">How it works</a><a href="#learn">Learn</a><a href="#faq">FAQ</a></div>
+<div class="navlinks"><a href="#scanner">Scanner</a><a href="#how">How it works</a><a href="tools.html">All tools</a><a href="#learn">Learn</a><a href="#faq">FAQ</a></div>
 <span class="local">● LOCAL PROCESSING</span>
 </nav>
 </header>
@@ -111,19 +111,19 @@ footer{border-top:1px solid #1e242d;padding:33px 0 45px;color:#697382;font-size:
 
 <section class="hero" id="scanner">
 <div>
-<div class="kicker">PHOTO PRIVACY SCANNER</div>
+<div class="kicker">LOCAL FILE METADATA SCANNER</div>
 <h1>Check it before<br><span>you share it.</span></h1>
-<p class="lead">Inspect hidden JPEG metadata such as GPS coordinates, device information and timestamps. Remove supported metadata locally and verify the cleaned copy before download.</p>
+<p class="lead">Inspect supported metadata in photos, MP3/WAV audio and Office documents. Create a cleaned copy locally, then check the supported metadata again. Visible or spoken personal information is not removed.</p>
 <div class="trust"><span><b>No account</b></span><span><b>No file upload</b></span><span><b>Free</b></span><span><b>Original preserved</b></span></div>
 </div>
 <div class="uploadCard">
 <div class="drop" id="drop">
 <div>
 <div class="uploadIcon">⇧</div>
-<p class="drop-title">Drop photos here</p>
-<p>or choose one or multiple photos</p>
+<p class="drop-title">Drop files here</p>
+<p>or choose one or multiple supported files</p>
 <small>JPG / PNG / WebP / MP3 / WAV / DOCX / XLSX / PPTX • local processing</small><br>
-<button class="btn pick" id="pick">SCAN PHOTOS</button>
+<button class="btn pick" id="pick">CHOOSE FILES</button>
 <label for="file" class="sr-only">Choose files to scan for metadata</label>
 <input id="file" type="file" accept="image/jpeg,image/png,image/webp,audio/mpeg,audio/wav,.mp3,.wav,.docx,.xlsx,.pptx" multiple hidden aria-label="Choose files to scan for metadata">
 <div class="selected" id="selected"><div class="thumb" id="thumb"></div><div class="selmeta"><b id="selname"></b><small id="selsize"></small><div class="scanline" id="scanline"><i></i></div></div></div>
@@ -132,8 +132,8 @@ footer{border-top:1px solid #1e242d;padding:33px 0 45px;color:#697382;font-size:
 </div>
 </section>
 
-<div class="proof"><div><b>LOCAL PROCESSING</b><small>Supported JPEG stays on device</small></div><div><b>LOSSLESS STRIPPING</b><small>No additional JPEG re-encode</small></div><div><b>POST-CLEAN VERIFY</b><small>Cleaned copy is scanned again</small></div></div>
-<div class="adslot"></div>
+<div class="proof"><div><b>LOCAL PROCESSING</b><small>Selected files are processed on device</small></div><div><b>LOSSLESS STRIPPING</b><small>No additional JPEG re-encode</small></div><div><b>POST-CLEAN VERIFY</b><small>Cleaned copy is scanned again</small></div></div>
+
 
 <section class="section" id="image-tools">
   <div class="sectionHead"><div class="kicker">METWIPE IMAGE SUITE</div>
@@ -200,13 +200,13 @@ footer{border-top:1px solid #1e242d;padding:33px 0 45px;color:#697382;font-size:
   <button class="btn clean" id="batchClean">CLEAN ALL & DOWNLOAD ZIP</button>
 </div>
 
-<button class="btn clean" id="again" style="display:none;background:#1c222b">SCAN ANOTHER PHOTO</button>
+<button class="btn clean" id="again" style="display:none;background:#1c222b">SCAN ANOTHER FILE</button>
 </div>
 </section>
 
 <div class="wrap">
 <section class="section" id="how">
-<div class="sectionHead"><div class="kicker">HOW IT WORKS</div><h2>Inspect. Clean. Verify.</h2><p class="sub">MetWipe is designed around the actual task rather than a fake demonstration panel. Your scan results only appear after you select your own JPEG.</p></div>
+<div class="sectionHead"><div class="kicker">HOW IT WORKS</div><h2>Inspect. Clean. Verify.</h2><p class="sub">MetWipe is designed around the actual task rather than a fake demonstration panel. Your scan results appear after you select a supported file.</p></div>
 <div class="cards">
 <div class="card"><h3>1. Inspect metadata</h3><p>Read common EXIF fields such as phone or camera model, timestamps, GPS, software and camera settings.</p></div>
 <div class="card"><h3>2. Remove supported metadata</h3><p>Strip supported JPEG metadata segments without adding another lossy JPEG compression pass.</p></div>
@@ -219,7 +219,7 @@ footer{border-top:1px solid #1e242d;padding:33px 0 45px;color:#697382;font-size:
   <div class="sectionHead">
     <div class="kicker">EXTENDED PRIVACY SUITE</div>
     <h2>Images, audio and Office files.</h2>
-    <p class="sub">MetWipe keeps the same animated Scan → Detect → Clean → Verify workflow across every format that is genuinely implemented in this build.</p>
+    <p class="sub">MetWipe keeps the same animated Scan → Detect → Clean → Verify workflow across supported image, audio and Office formats.</p>
   </div>
   <div class="cards">
     <div class="card"><h3>MP3 Metadata Cleaner</h3><p>Detects and removes ID3v2 metadata at the beginning of MP3 files and ID3v1 tags at the end, then verifies the cleaned output.</p></div>
@@ -227,17 +227,17 @@ footer{border-top:1px solid #1e242d;padding:33px 0 45px;color:#697382;font-size:
     <div class="card"><h3>DOCX Privacy Cleaner</h3><p>Removes core document properties such as author, last modified by, title, subject and description from OOXML packages.</p></div>
     <div class="card"><h3>XLSX Privacy Cleaner</h3><p>Cleans workbook core metadata inside the OOXML ZIP container while keeping workbook content intact.</p></div>
     <div class="card"><h3>PPTX Privacy Cleaner</h3><p>Cleans presentation core metadata using the same local OOXML package workflow.</p></div>
-    <div class="card"><h3>Animated Verification</h3><p>Every supported cleaner shows visible progress, staged checks and a final verified state instead of instant fake success.</p></div>
+    <div class="card"><h3>Animated Verification</h3><p>Every supported cleaner shows visible progress, staged checks and a final verified state with the limitations described in the format guide.</p></div>
   </div>
 </section>
 
 <section class="section" id="learn">
-<div class="sectionHead"><div class="kicker">FREE PRIVACY GUIDES</div><h2>Understand what photos can reveal.</h2><p class="sub">Original supporting content gives users useful context and gives search engines pages with distinct intent instead of duplicated keyword shells.</p></div>
+<div class="sectionHead"><div class="kicker">FREE PRIVACY GUIDES</div><h2>Understand what photos can reveal.</h2><p class="sub">Learn what metadata can reveal, which fields the tools check, and how to review the downloaded copy before sharing.</p></div>
 <div class="toolLinks">
 <a href="exif-viewer.html" data-guide="exif">EXIF Viewer Guide →</a>
 <a href="remove-exif.html" data-guide="remove">Remove EXIF Guide →</a>
-<a href="gps-metadata.html" data-guide="gps">GPS Metadata Guide →</a>
-<a href="photo-metadata.html" data-guide="photo">Photo Metadata Guide →</a>
+<a href="how-gps-metadata-works.html" data-guide="gps">GPS Metadata Guide →</a>
+<a href="photo-metadata-privacy-guide.html" data-guide="photo">Photo Metadata Guide →</a>
 </div>
 </section>
 
@@ -249,9 +249,9 @@ footer{border-top:1px solid #1e242d;padding:33px 0 45px;color:#697382;font-size:
 <details><summary>Is a 100/100 Supported metadata score a security guarantee?</summary><p>No. The score is a heuristic for supported metadata fields. Visible content can still reveal faces, addresses, documents, landmarks and other information.</p></details>
 </section>
 
-<div class="adslot"></div>
+
 </main>
-<footer><div class="foot"><span>© 2026 MetWipe — a privacy utility by Ecrin Labs.</span><div class="footlinks"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="about.html">About</a><a href="contact.html">Contact</a></div></div></footer>
+<footer><div class="foot"><span>© 2026 MetWipe — a privacy utility by Ecrin Labs.</span><div class="footlinks"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="about.html">About</a><a href="contact.html">Contact</a></div></div><p class="review-links"><a href="tools.html">All tools</a> · <a href="supported-formats.html">Formats &amp; limits</a> · <a href="editorial-policy.html">Editorial policy</a></p></footer>
 </div>
 
 
@@ -698,7 +698,7 @@ const _f=document.querySelector('#file'), _sel=document.querySelector('#selected
 if(_f){
   _f.addEventListener('change',()=>{
     const f=_f.files&&_f.files[0]; if(!f)return;
-    _name.textContent=f.name; _size.textContent=(f.size/1024/1024).toFixed(2)+' MB • JPEG';
+    _name.textContent=f.name; _size.textContent=(f.size/1024/1024).toFixed(2)+' MB • '+f.name.split('.').pop().toUpperCase();
     try{_thumb.style.backgroundImage='url("'+URL.createObjectURL(f)+'")'}catch(e){}
     _sel.classList.add('show'); _line.classList.add('show');
   });
