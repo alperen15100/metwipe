@@ -21,7 +21,6 @@ if(new URLSearchParams(location.search).get('embed')==='1'){
    if(size>a.length)throw Error('Malformed ID3 tag size');start=size;blocks.push('ID3v2');
   }
   if(end>=128&&txt(a,end-128,3)==='TAG'){end-=128;blocks.push('ID3v1')}
-
   if(end>=32&&txt(a,end-32,8)==='APETAGEX'){
    const footer=end-32,size=readLE32(a,footer+12),flags=readLE32(a,footer+20);
    if(size<32||size>end-start)throw Error('Malformed APEv2 tag size');
@@ -30,14 +29,11 @@ if(new URLSearchParams(location.search).get('embed')==='1'){
    if(headerFlag&&apeStart>=32&&txt(a,apeStart-32,8)==='APETAGEX')apeStart-=32;
    end=apeStart;blocks.push('APEv2');
   }
-
   if(end>=15&&txt(a,end-9,9)==='LYRICS200'){
    const sizeText=txt(a,end-15,6);
    if(isDigits(sizeText)){
     const bodySize=Number(sizeText),lyrStart=end-(bodySize+15);
-    if(bodySize>=11&&lyrStart>=start&&txt(a,lyrStart,11)==='LYRICSBEGIN'){
-     end=lyrStart;blocks.push('Lyrics3v2');
-    }
+    if(bodySize>=11&&lyrStart>=start&&txt(a,lyrStart,11)==='LYRICSBEGIN'){end=lyrStart;blocks.push('Lyrics3v2')}
    }
   } else if(end>=9&&txt(a,end-9,9)==='LYRICSEND'){
    const floor=Math.max(start,end-5110);let found=-1;
@@ -48,24 +44,22 @@ if(new URLSearchParams(location.search).get('embed')==='1'){
   return{start,end,blocks};
  }
 
- /* The UI calls parseMP3(), while older cleaning code also calls parseMP3Blocks().
-    Extend both so scan, clean and verification all inspect the same metadata types. */
  const baseParseMP3=parseMP3;
  parseMP3=function(buf){
   const parsed=baseParseMP3(buf),m=mp3Layout(buf);
-  parsed.blocks=m.blocks;
-  parsed.v2size=m.start;
-  parsed.audioEnd=m.end;
-  return parsed;
+  parsed.blocks=m.blocks;parsed.v2size=m.start;parsed.audioEnd=m.end;return parsed;
  };
- parseMP3Blocks=function(buf){
-  const m=mp3Layout(buf);
-  return{format:'MP3',blocks:m.blocks,v2size:m.start,audioEnd:m.end};
- };
- stripMP3=function(buf){
-  const a=new Uint8Array(buf),m=mp3Layout(buf);
-  return new Blob([a.slice(m.start,m.end)],{type:'audio/mpeg'});
- };
+ parseMP3Blocks=function(buf){const m=mp3Layout(buf);return{format:'MP3',blocks:m.blocks,v2size:m.start,audioEnd:m.end}};
+ stripMP3=function(buf){const a=new Uint8Array(buf),m=mp3Layout(buf);return new Blob([a.slice(m.start,m.end)],{type:'audio/mpeg'})};
+
+ /* Keep the visible limitation note aligned with the parser actually used by scan/clean/verify. */
+ if(typeof scopeNote==='function'){
+  const baseScopeNote=scopeNote;
+  scopeNote=function(k){
+   if(k==='mp3')return '<p style="color:#8f98a8;font-size:10px;line-height:1.65;margin-top:16px">MetWipe checks supported MP3 metadata structures including ID3v1, ID3v2, APEv2 and Lyrics3. ID3v1, APEv2 and Lyrics3v2 removal have been verified with regression fixtures in the current build. Other identifiers and the audio content itself are not inspected. Removing a metadata tag does not change copyright ownership.</p>';
+   return baseScopeNote(k);
+  };
+ }
 
  const baseParseOOXML=parseOOXML;
  parseOOXML=async function(buf){
@@ -75,14 +69,7 @@ if(new URLSearchParams(location.search).get('embed')==='1'){
    const xml=new DOMParser().parseFromString(new TextDecoder().decode(custom.data),'application/xml');
    if(!xml.querySelector('parsererror')){
     const props=[...xml.getElementsByTagName('*')].filter(n=>n.localName==='property');
-    if(props.length){
-     parsed.blocks.push('Custom document properties');
-     for(const p of props){
-      const name=p.getAttribute('name')||'Custom property';
-      const value=(p.textContent||'').trim();
-      parsed.fields.push([name,value||'Present']);
-     }
-    }
+    if(props.length){parsed.blocks.push('Custom document properties');for(const p of props){const name=p.getAttribute('name')||'Custom property';const value=(p.textContent||'').trim();parsed.fields.push([name,value||'Present'])}}
    }
   }
   return parsed;
@@ -94,22 +81,13 @@ if(new URLSearchParams(location.search).get('embed')==='1'){
   const appNames=new Set(['Company','Manager','Template','Application','AppVersion','TotalTime']);
   for(const e of entries){
    if(e.name==='docProps/core.xml'){
-    const xml=new DOMParser().parseFromString(new TextDecoder().decode(e.data),'application/xml');
-    if(xml.querySelector('parsererror'))throw Error('Invalid document properties XML');
-    for(const node of [...xml.getElementsByTagName('*')])if(coreNames.has(node.localName))node.remove();
-    e.data=new TextEncoder().encode(new XMLSerializer().serializeToString(xml));
+    const xml=new DOMParser().parseFromString(new TextDecoder().decode(e.data),'application/xml');if(xml.querySelector('parsererror'))throw Error('Invalid document properties XML');for(const node of [...xml.getElementsByTagName('*')])if(coreNames.has(node.localName))node.remove();e.data=new TextEncoder().encode(new XMLSerializer().serializeToString(xml));
    }
    if(e.name==='docProps/app.xml'){
-    const xml=new DOMParser().parseFromString(new TextDecoder().decode(e.data),'application/xml');
-    if(xml.querySelector('parsererror'))throw Error('Invalid application properties XML');
-    for(const node of [...xml.getElementsByTagName('*')])if(appNames.has(node.localName))node.textContent='';
-    e.data=new TextEncoder().encode(new XMLSerializer().serializeToString(xml));
+    const xml=new DOMParser().parseFromString(new TextDecoder().decode(e.data),'application/xml');if(xml.querySelector('parsererror'))throw Error('Invalid application properties XML');for(const node of [...xml.getElementsByTagName('*')])if(appNames.has(node.localName))node.textContent='';e.data=new TextEncoder().encode(new XMLSerializer().serializeToString(xml));
    }
    if(e.name==='docProps/custom.xml'){
-    const xml=new DOMParser().parseFromString(new TextDecoder().decode(e.data),'application/xml');
-    if(xml.querySelector('parsererror'))throw Error('Invalid custom properties XML');
-    for(const node of [...xml.getElementsByTagName('*')].filter(n=>n.localName==='property'))node.remove();
-    e.data=new TextEncoder().encode(new XMLSerializer().serializeToString(xml));
+    const xml=new DOMParser().parseFromString(new TextDecoder().decode(e.data),'application/xml');if(xml.querySelector('parsererror'))throw Error('Invalid custom properties XML');for(const node of [...xml.getElementsByTagName('*')].filter(n=>n.localName==='property'))node.remove();e.data=new TextEncoder().encode(new XMLSerializer().serializeToString(xml));
    }
   }
   return await makeZipFromRaw(entries);
