@@ -32,7 +32,7 @@ Build legitimate discovery and referral signals for https://metwipe.com/ without
 | Target | Fit | Cost / account | Status | Submission notes |
 |---|---|---|---|---|
 | Ignlab Launch | General SaaS + web tools; security tools accepted | Free; no account required | READY — BLOCKED | Form inspected; unrelated advertising redirects prevented filling. No submission confirmed. |
-| directree | General software directory; free/no pay-to-rank positioning | Free submission; account required | PENDING | Ownership verified 2026-10-01. Directree verification badge added to the MetWipe homepage footer; awaiting Directree badge check / final public listing before marking LIVE. |
+| directree | General software directory; free/no pay-to-rank positioning | Free submission; account required | PENDING | Public listing is visible. Ownership is verified and founder edits were saved on 2026-10-02; edits are awaiting moderation. Directree shows do-follow activation after approval/verification, with free review currently scheduled in about 35 days. No paid fast-track selected. |
 | CodeHype | SaaS / developer tools directory with reviewed organic listings | Free organic submission; account required | READY — LOGIN REQUIRED | Submission form and account dialog verified. Not submitted. |
 | Awesome Free Browser Tools (GitHub) | Explicitly accepts free browser-based tools | PR requested | READY FOR PR | Add MetWipe under Utility Tools or Image/Media tooling with one factual line. |
 | Awesome Free Online Tools (GitHub) | Explicitly accepts free browser tools and PRs | PR requested | READY FOR PR | Best category: PDF & files / utilities / security depending maintainer preference. |
