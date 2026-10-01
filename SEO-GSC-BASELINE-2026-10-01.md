@@ -70,3 +70,40 @@ The homepage average position of 7.8 is promising but based on only 10 impressio
 - Expanded the homepage learning section beyond photo-only content to include MP3/ID3, Word metadata and the answer center.
 - Preserved existing titles and canonical URLs; no bulk CTR/title rewrite was made because rankings and impression volume are not mature enough.
 - Next required GSC evidence: exact URL lists under "Crawled — currently not indexed" and "Discovered — currently not indexed".
+
+
+## Exact indexing examples supplied after the baseline
+
+### Discovered — currently not indexed
+Google Search Console listed these four URLs:
+- https://metwipe.com/check-photo-location.html
+- https://metwipe.com/remove-camera-info-from-photo.html
+- https://metwipe.com/remove-exif-iphone.html
+- https://metwipe.com/tools.html
+
+The report showed no crawl date for these examples. Because the report itself was last updated on 2026-09-21, it predates the 2026-10-01 internal-link upgrades. Treat this as a crawl-priority signal, not proof that the current version is still undiscovered.
+
+### Crawled — currently not indexed
+- https://metwipe.com/mp3-metadata-privacy-guide.html
+- Last crawl shown: 2026-09-16
+
+This page overlapped too closely with the transactional MP3 remover intent. It has now been retargeted toward informational MP3 metadata privacy (ID3/APEv2/Lyrics3/artwork/copyright misconceptions) while the actual remover page remains the transactional destination.
+
+### Alternate page with proper canonical
+- https://metwipe.com/index.html
+
+This is expected because the canonical homepage is https://metwipe.com/.
+
+### Page with redirect
+- http://metwipe.com/
+- http://www.metwipe.com/
+- https://www.metwipe.com/
+
+These are expected hostname/protocol normalization redirects to the canonical HTTPS non-www site and should not be forced into the index.
+
+## Indexing actions applied
+- Added direct homepage links to the three discovered photo URLs and the tools hub.
+- Expanded the three thin photo pages with distinct, task-specific content and breadcrumb structured data.
+- Retargeted the MP3 privacy guide away from the remover page's transactional intent and added Article structured data.
+- Added CollectionPage structured data to tools.html.
+- Added accurate 2026-10-01 sitemap lastmod values only for pages actually changed in this indexing pass.
