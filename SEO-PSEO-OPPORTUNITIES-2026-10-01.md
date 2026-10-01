@@ -9,9 +9,11 @@ Do not publish a page because a keyword variant exists. A pSEO candidate is publ
 5. the new URL has a clear parent topic hub.
 
 ## Current topic hubs
-- /photo-metadata-tools.html — EXIF, GPS, camera/device and photo-sharing privacy
-- /mp3-metadata-tools.html — MP3 checker, remover, artwork and ID3/privacy
-- /word-metadata-tools.html — DOCX checker, broad cleaner and focused property tasks
+- /photo-metadata-tools.html — parent image/photo center for JPEG/EXIF/GPS plus PNG and WebP workflows
+- /audio-metadata-tools.html — parent audio center for MP3 and WAV workflows
+- /mp3-metadata-tools.html — MP3 child hub for checker, remover, artwork and ID3/privacy
+- /office-metadata-tools.html — parent Office center for DOCX, XLSX and PPTX workflows
+- /word-metadata-tools.html — Word/DOCX child hub for broad cleaning and focused property tasks
 
 ## Hold — validate with Search Console before publishing
 ### Photo / EXIF
