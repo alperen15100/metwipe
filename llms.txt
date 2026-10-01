@@ -8,6 +8,7 @@
 - https://metwipe.com/supported-formats.html — Exact supported formats and verification limits.
 
 ## Photo metadata
+- https://metwipe.com/photo-metadata-tools.html — Photo metadata topic center for EXIF, GPS, device information and safer-sharing workflows.
 - https://metwipe.com/exif-viewer.html — Inspect supported EXIF metadata.
 - https://metwipe.com/check-exif-metadata.html — Check supported EXIF fields before sharing.
 - https://metwipe.com/check-photo-location.html — Check a supported photo for GPS/location metadata.
