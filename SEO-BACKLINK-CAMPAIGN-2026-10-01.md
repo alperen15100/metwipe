@@ -89,7 +89,7 @@ MetWipe uses an Inspect → Clean → Verify workflow, keeps the original file u
 
 **Platform:** Web / Browser.
 
-**Open source:** Public GitHub repository available.
+**Source availability:** Public GitHub repository available. No open-source license is currently published in the repository root, so do not describe MetWipe as open source/FOSS yet.
 
 ## Tracking
 
@@ -102,6 +102,9 @@ Update statuses only when there is evidence:
 - SKIPPED — intentionally not pursued
 
 Do not mark a backlink LIVE until the public listing URL is verified.
+
+## Licensing accuracy
+The repository is public but currently has no LICENSE file in the repository root. Use "public GitHub repository" or "public source repository"; do not claim open-source/FOSS status unless a license is deliberately added later.
 
 ## Outreach rule
 A backlink is useful only when the surrounding page is legitimate and relevant. Prefer fewer relevant links over hundreds of low-quality directory entries.
