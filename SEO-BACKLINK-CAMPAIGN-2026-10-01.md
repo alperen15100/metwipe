@@ -36,7 +36,7 @@ Build legitimate discovery and referral signals for https://metwipe.com/ without
 | CodeHype | SaaS / developer tools directory with reviewed organic listings | Free organic submission | SKIPPED | Submission flow abandoned on 2026-10-02 after the mobile form redirected/reset during logo upload. Do not retry unless the flow becomes more stable. |
 | Awesome Free Browser Tools (GitHub) | Explicitly accepts free browser-based tools | PR or issue accepted | SUBMITTED | Issue #43 opened on 2026-10-02. Await maintainer review before marking LIVE. |
 | Awesome Free Online Tools (GitHub) | Explicitly accepts free browser tools and PRs | PR requested | SUBMITTED | Pull request #63 opened on 2026-10-02 and is currently open/mergeable. Await maintainer review before marking LIVE. |
-| Awesome Online Tools / wtoolskit catalog (GitHub) | PRs welcome for client-side / no-signup tools | PR requested | READY FOR PR | Keep wording factual; do not claim zero third-party scripts, only local file processing. |
+| Awesome Online Tools / wtoolskit catalog (GitHub) | PRs welcome for client-side / no-signup tools | PR requested | SUBMITTED | Pull request #10 opened on 2026-10-02 and is currently open/mergeable. Await maintainer review before marking LIVE. |
 
 ## Priority B — useful but lower SEO value / slower
 
