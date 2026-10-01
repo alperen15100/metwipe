@@ -31,9 +31,9 @@ Build legitimate discovery and referral signals for https://metwipe.com/ without
 
 | Target | Fit | Cost / account | Status | Submission notes |
 |---|---|---|---|---|
-| Ignlab Launch | General SaaS + web tools; security tools accepted | Free; no account required per current site | READY | Submit MetWipe as Security / Web Tool. Use canonical copy above. |
-| directree | General software directory; free/no pay-to-rank positioning | Free submission | READY | Paste https://metwipe.com/ and review inferred fields before submitting. |
-| CodeHype | SaaS / developer tools directory with reviewed organic listings | Free organic submission | READY | Use Privacy / Developer Tool framing. |
+| Ignlab Launch | General SaaS + web tools; security tools accepted | Free; no account required | READY — BLOCKED | Form inspected; unrelated advertising redirects prevented filling. No submission confirmed. |
+| directree | General software directory; free/no pay-to-rank positioning | Free submission; account required | READY — LOGIN REQUIRED | Submission page verified; sign-in required before URL entry and publishing. Not submitted. |
+| CodeHype | SaaS / developer tools directory with reviewed organic listings | Free organic submission; account required | READY — LOGIN REQUIRED | Submission form and account dialog verified. Not submitted. |
 | Awesome Free Browser Tools (GitHub) | Explicitly accepts free browser-based tools | PR requested | READY FOR PR | Add MetWipe under Utility Tools or Image/Media tooling with one factual line. |
 | Awesome Free Online Tools (GitHub) | Explicitly accepts free browser tools and PRs | PR requested | READY FOR PR | Best category: PDF & files / utilities / security depending maintainer preference. |
 | Awesome Online Tools / wtoolskit catalog (GitHub) | PRs welcome for client-side / no-signup tools | PR requested | READY FOR PR | Keep wording factual; do not claim zero third-party scripts, only local file processing. |
@@ -105,3 +105,18 @@ Do not mark a backlink LIVE until the public listing URL is verified.
 
 ## Outreach rule
 A backlink is useful only when the surrounding page is legitimate and relevant. Prefer fewer relevant links over hundreds of low-quality directory entries.
+
+
+## Execution log — 2026-10-01 (Europe/Istanbul)
+
+User authorized free submissions to Ignlab Launch, directree and CodeHype using this file. No paid options selected; no purchase made.
+
+| Target | Observed submission URL | Action / evidence | Actual result |
+|---|---|---|---|
+| Ignlab Launch | https://launch.ignlab.net/submit.html | Inspected free, no-account form (name, URL, tagline, description, category, tags, pricing, optional email and challenge). Form-fill attempts failed after unrelated advertising navigation, including TotalAV and a browser-blocked DHgate destination. A direct return to the verified form still did not allow filling. | NOT SUBMITTED. No success message or listing URL. No CAPTCHA solved. |
+| directree | https://www.directree.io/submit | Clicked Submit a tool free; page states a free account is required first. Visible Sign in to continue and Create free account. | NOT SUBMITTED. Authentication required. |
+| CodeHype | https://www.codehype.ai/submit | Opened launch form and Sign in to launch dialog. Dialog offers Google, sign-in and signup; continuing includes Terms acceptance and a Substack subscription notice. | NOT SUBMITTED. Account access required; no account created or terms accepted. |
+
+Confirmed submitted count: **0 / 3**. Verified live backlinks: **0**. Existing READY status means prepared, not sent. BLOCKED / LOGIN REQUIRED are explanatory qualifiers, not moderator outcomes.
+
+Next step: user-assisted account access for directree and CodeHype; retry Ignlab only when its form remains usable in the browser. Do not duplicate any listing or mark SUBMITTED/LIVE without visible confirmation.
