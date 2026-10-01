@@ -11,7 +11,7 @@ The MetWipe repository is public, but there is currently no LICENSE file in the 
 | Target | Route | Status | Best MetWipe page |
 |---|---|---|---|
 | aviaryan/awesome-no-login-web-apps | Fork + PR | SUBMITTED — PR #664 open | https://metwipe.com/ |
-| Zio-Tibia/awesome-no-signup-tools | Fork + PR | READY | https://metwipe.com/ |
+| Zio-Tibia/awesome-no-signup-tools | Fork + PR | SUBMITTED — PR #59 open | https://metwipe.com/ |
 | nologin-tools/awesome-nologin-tools / nologin.tools | Web submission | READY | https://metwipe.com/ |
 | ODIPA Community Privacy Tools | Web submission | READY — verify license requirements first | https://metwipe.com/ |
 | abczsl520/awesome-online-tools | Fork + PR | READY | https://metwipe.com/remove-exif.html |
