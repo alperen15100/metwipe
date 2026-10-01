@@ -1,0 +1,36 @@
+name: SEO Health
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "**.html"
+      - "sitemap.xml"
+      - "robots.txt"
+      - "llms.txt"
+      - "consolidation-map.json"
+      - "scripts/seo_audit.py"
+      - ".github/workflows/seo-health.yml"
+  pull_request:
+    paths:
+      - "**.html"
+      - "sitemap.xml"
+      - "robots.txt"
+      - "llms.txt"
+      - "consolidation-map.json"
+      - "scripts/seo_audit.py"
+      - ".github/workflows/seo-health.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Run static SEO regression audit
+        run: python scripts/seo_audit.py
