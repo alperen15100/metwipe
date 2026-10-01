@@ -31,7 +31,7 @@ Build legitimate discovery and referral signals for https://metwipe.com/ without
 
 | Target | Fit | Cost / account | Status | Submission notes |
 |---|---|---|---|---|
-| Ignlab Launch | General SaaS + web tools; security tools accepted | Free; no account required | READY — BLOCKED | Form inspected; unrelated advertising redirects prevented filling. No submission confirmed. |
+| Ignlab Launch | General SaaS + web tools; security tools accepted | Free; no account required | SUBMITTED | Submitted manually on 2026-10-01. Private edit URL was received; keep it private. Await public listing verification before marking LIVE. |
 | directree | General software directory; free/no pay-to-rank positioning | Free submission; account required | PENDING | Public listing is visible. Ownership is verified and founder edits were saved on 2026-10-02; edits are awaiting moderation. Directree shows do-follow activation after approval/verification, with free review currently scheduled in about 35 days. No paid fast-track selected. |
 | CodeHype | SaaS / developer tools directory with reviewed organic listings | Free organic submission | SKIPPED | Submission flow abandoned on 2026-10-02 after the mobile form redirected/reset during logo upload. Do not retry unless the flow becomes more stable. |
 | Awesome Free Browser Tools (GitHub) | Explicitly accepts free browser-based tools | PR requested | READY FOR PR | Add MetWipe under Utility Tools or Image/Media tooling with one factual line. |
@@ -117,6 +117,6 @@ User authorized free submissions to Ignlab Launch, directree and CodeHype using 
 | directree | https://www.directree.io/submit | Clicked Submit a tool free; page states a free account is required first. Visible Sign in to continue and Create free account. | NOT SUBMITTED. Authentication required. |
 | CodeHype | https://www.codehype.ai/submit | Opened launch form and Sign in to launch dialog. Dialog offers Google, sign-in and signup; continuing includes Terms acceptance and a Substack subscription notice. | NOT SUBMITTED. Account access required; no account created or terms accepted. |
 
-Confirmed submitted count: **0 / 3**. Verified live backlinks: **0**. Existing READY status means prepared, not sent. BLOCKED / LOGIN REQUIRED are explanatory qualifiers, not moderator outcomes.
+Manual follow-up superseded the initial Work attempt: Ignlab was subsequently submitted by the user, Directree was subsequently claimed and is awaiting moderation, and CodeHype was intentionally skipped after a mobile form reset. Verified live do-follow backlinks are still pending moderation/verification.
 
 Next step: user-assisted account access for directree and CodeHype; retry Ignlab only when its form remains usable in the browser. Do not duplicate any listing or mark SUBMITTED/LIVE without visible confirmation.
