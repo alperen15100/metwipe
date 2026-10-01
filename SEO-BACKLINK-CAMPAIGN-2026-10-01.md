@@ -42,7 +42,7 @@ Build legitimate discovery and referral signals for https://metwipe.com/ without
 
 | Target | Fit | Cost / account | Status | Notes |
 |---|---|---|---|---|
-| 10015 Product Finder | General product/tool directory | Free submission; current free queue is long and free links are nofollow | READY | Good referral/discovery play, not a primary SEO-link target. |
+| 10015 Product Finder | General product/tool directory | Free submission; current free queue is long and free links are nofollow | SUBMITTED | MetWipe submitted successfully on 2026-10-02 via the free standard-review route. Confirmation page shows an estimated 3–4 month review queue. Paid 24-hour priority review ($9.99) was not selected. Await public listing verification before marking LIVE. |
 | Launching Next | Startup/product directory | Free route reported in current directory research | REVIEW | Submit only if their current form still accepts utility products. |
 | Startup Stash | Startup/tool directory | Free route reported in current directory research | REVIEW | Relevant if Privacy/Security/Developer Tools category exists. |
 | AlternativeTo | Software discovery platform | Account likely required | MANUAL | Strong discovery value if MetWipe can be listed as an alternative to metadata-removal utilities. |
