@@ -46,6 +46,7 @@
 - https://metwipe.com/remove-pptx-metadata.html — Remove supported PPTX metadata.
 
 ## Guides and answers
+- https://metwipe.com/metadata-field-reference.html — Cross-format reference for common metadata structures, fields, privacy boundaries and matching MetWipe workflows.
 - https://metwipe.com/metadata-answers.html — Concise metadata privacy answers.
 - https://metwipe.com/what-is-exif-metadata.html — EXIF metadata guide.
 - https://metwipe.com/how-gps-metadata-works.html — GPS metadata guide.
