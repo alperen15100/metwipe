@@ -23,6 +23,7 @@
 - https://metwipe.com/check-webp-metadata.html — Check supported WebP metadata.
 
 ## Audio metadata
+- https://metwipe.com/audio-metadata-tools.html — Parent audio metadata center for MP3 and WAV checking and cleaning workflows.
 - https://metwipe.com/mp3-metadata-tools.html — MP3 metadata topic center for checking, cleaning and understanding supported tags.
 - https://metwipe.com/check-mp3-metadata.html — Inspect supported MP3 metadata.
 - https://metwipe.com/remove-mp3-metadata.html — Remove supported MP3 metadata without re-encoding the audio payload.
@@ -32,6 +33,7 @@
 - https://metwipe.com/remove-wav-metadata.html — Remove supported WAV metadata chunks.
 
 ## Office document metadata
+- https://metwipe.com/office-metadata-tools.html — Parent Office metadata center for Word, Excel and PowerPoint workflows.
 - https://metwipe.com/word-metadata-tools.html — Word/DOCX metadata topic center for checking and removing supported document properties.
 - https://metwipe.com/check-word-document-metadata.html — Inspect supported Word/DOCX metadata.
 - https://metwipe.com/remove-docx-metadata.html — Remove supported DOCX metadata.
