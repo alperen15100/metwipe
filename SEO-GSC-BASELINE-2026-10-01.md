@@ -117,3 +117,13 @@ These are expected hostname/protocol normalization redirects to the canonical HT
 - Live SERP review confirmed the dominant intent is an immediately usable browser tool plus clear scope/limits, not a thin keyword article.
 - No new keyword-variant landing pages were created; existing focused intents remain separate to avoid duplicate-intent expansion.
 - Measurement: compare GSC impressions, query coverage and average position after recrawl/reindex; do not attribute early day-to-day movement as a stable ranking lift.
+
+
+## 2026-10-02 — International SEO pilot: MP3 + Word
+
+- Added fully translated primary-content landing pages for the two GSC-proven transactional intents in Spanish, German and French: MP3 metadata removal and Word/DOCX metadata removal.
+- Kept the existing English URLs as generic English rather than cloning near-identical en-US/en-GB/en-CA/en-AU pages. This avoids unnecessary same-language regional duplication while the product/content has no meaningful regional variation.
+- Added reciprocal HTML hreflang sets across EN/ES/DE/FR plus x-default on both page families, with self-canonical URLs on every localized page.
+- Added the six localized URLs to sitemap.xml. Hreflang is implemented in HTML only; Google documents HTML, HTTP headers and sitemap hreflang as equivalent methods, so duplicating the annotations in all three is intentionally avoided.
+- Scope remains a controlled pilot: no mass translation of the full site until these pages are crawled and GSC begins returning language/query evidence.
+- Localized pages accurately describe supported MP3 and DOCX processing and route users to the maintained MetWipe scanner; no unsupported formats were introduced.
