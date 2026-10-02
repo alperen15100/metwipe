@@ -107,3 +107,13 @@ These are expected hostname/protocol normalization redirects to the canonical HT
 - Retargeted the MP3 privacy guide away from the remover page's transactional intent and added Article structured data.
 - Added CollectionPage structured data to tools.html.
 - Added accurate 2026-10-01 sitemap lastmod values only for pages actually changed in this indexing pass.
+
+
+## 2026-10-02 — MP3 + Word ranking push
+
+- GSC baseline still shows the strongest non-home demand around MP3 removal and Word/DOCX metadata removal, but average positions are still far from the near-miss zone.
+- Kept the recently changed titles, descriptions and primary remover-page copy stable so the measurement window is not reset by another rewrite.
+- Strengthened contextual internal links into the primary transactional URLs from the ID3 explainer, MP3 checker, Word checker, and focused Word Author / Last Modified By / Company pages.
+- Live SERP review confirmed the dominant intent is an immediately usable browser tool plus clear scope/limits, not a thin keyword article.
+- No new keyword-variant landing pages were created; existing focused intents remain separate to avoid duplicate-intent expansion.
+- Measurement: compare GSC impressions, query coverage and average position after recrawl/reindex; do not attribute early day-to-day movement as a stable ranking lift.
