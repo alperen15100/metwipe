@@ -127,3 +127,12 @@ These are expected hostname/protocol normalization redirects to the canonical HT
 - Added the six localized URLs to sitemap.xml. Hreflang is implemented in HTML only; Google documents HTML, HTTP headers and sitemap hreflang as equivalent methods, so duplicating the annotations in all three is intentionally avoided.
 - Scope remains a controlled pilot: no mass translation of the full site until these pages are crawled and GSC begins returning language/query evidence.
 - Localized pages accurately describe supported MP3 and DOCX processing and route users to the maintained MetWipe scanner; no unsupported formats were introduced.
+
+
+## 2026-10-02 — International SEO expansion
+
+- The first EN/ES/DE/FR MP3 + Word pilot deployed successfully, so the same controlled architecture was extended to four already-supported, already-indexable remover intents: EXIF/JPG, WebP, WAV and XLSX.
+- Added 12 localized pages (ES/DE/FR × 4 intents), reciprocal HTML hreflang on the four English originals, self-canonicals on localized pages, and sitemap entries.
+- Still no en-US/en-GB/en-CA/en-AU clones: there is not yet meaningful country-specific product/content variation to justify duplicate English regional URLs.
+- No unsupported formats and no new keyword-only intent variants were introduced.
+- Next decision gate remains GSC evidence by country/language/query; do not mass-localize the remaining site merely because the infrastructure exists.
